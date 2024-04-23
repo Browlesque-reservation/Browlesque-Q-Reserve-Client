@@ -1,0 +1,1328 @@
+* {
+    padding: 0;
+    margin: 0;
+  }
+
+html, body {
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container-fluid{
+  padding: 0;
+}
+
+
+/* Custom CSS for Navbar */
+.navbar-custom {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%,  rgba(0, 0, 0, 0) 90%), #313131;
+}
+
+@media (max-width: 768px) {
+  .navbar-custom{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+}
+
+.navbar-custom .nav-link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 1rem 1.125rem;
+    text-decoration: none;
+    transition: border-radius 0.5s, background-color 0.5s, text-shadow 0.5s, font-size 0.5s;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.navbar-custom .nav-link:hover {
+    border-radius: 0.5rem;
+    background-color: #ffffff; 
+    text-shadow: 0px 0px 0.5vw rgba(255, 255, 255, 0.5);
+    transition-delay: 0s;
+    color: #313131;
+}
+
+.navbar-custom .nav-link:active {
+    background-color: #ffffff;
+    color: #313131;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link:active {
+    padding: calc(1vw + 0.125vw) calc(1.125vw + 0.125vw); /* Adjust padding to compensate for font size change */
+}
+
+.navbar-custom .navbar-brand {
+    color: white; 
+    font-weight: 500;
+}
+
+.navbar-brand img {
+  filter: brightness(0) invert(1);
+}
+
+
+/* Reset padding and margins for navbar */
+.navbar-custom .navbar-nav .nav-item {
+    padding: 0; 
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    padding: 1.2vw 1.4vw; 
+    margin: 0;
+}
+
+.navbar-custom .logo-browlesque-client {
+    width: 15rem;
+    height: auto;
+}
+
+#browlesque {
+    padding: 3rem;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.navbar-toggler{
+  background-color: #ffffff;
+}
+/* firstimage */
+
+#microblading2 {
+    padding: 0;
+    display: block;
+    margin: auto;
+    max-width: 50rem;
+    max-height: 50rem;
+    position: relative;
+    border-radius: 1.0vw; /* Using vw for border-radius */
+    box-shadow: -0.3vw 0.3vw 0.8vw #707070; /* Using vw for box-shadow */
+}
+
+/* button to order */
+.button-appoint {
+  display: block; 
+  margin-top: 2rem;
+  text-align: center;
+  padding-top: 5vh; 
+  padding-bottom: 5vh;
+}
+
+.btn.btn-primary-custom {
+  font-weight: 400;
+  background-color: #313131;
+  font-size: 1.8rem; 
+  transition: transform 0.3s ease;
+  border: 1px solid #313131;
+  padding: 1.5vh 3vw; /* Adjust padding to control button size */
+}
+
+.btn.btn-primary-custom-tc {
+  font-weight: 400;
+  background-color: #313131;
+  font-size: 1rem; 
+  transition: transform 0.3s ease;
+  border: 1px solid #313131;
+  padding: 1vh 2vw; /* Adjust padding to control button size */
+}
+
+.btn.btn-secondary-custom{
+  font-weight: 400;
+  background-color: #6c757d;
+  font-size: 1rem; 
+  transition: transform 0.3s ease;
+  border: 1px solid #6c757d;
+  padding: 1vh 2vw; /* Adjust padding to control button size */
+}
+
+@media (max-width: 768px) {
+  .button-appoint {
+    margin-top: 0.5rem;
+  }
+
+  .btn.btn-primary-custom {
+    font-size: 1.2rem; 
+  }
+
+  #microblading2 {
+    max-width: 25rem;
+    max-height: 25rem;
+}
+}
+
+.btn.btn-primary-custom:hover {
+  transform: scale(1.1);
+}
+
+.btn.btn-primary-custom:active {
+  background-color: #adadad;
+  color: #111111;
+  border-color: #ffffff;
+  transform: scale(1.1);
+}
+
+.btn.btn-primary-custom-tc:hover{
+  transform: scale(1.1);
+}
+
+.btn.btn-primary-custom-tc:active {
+  transform: scale(1.1);
+  background-color: #adadad;
+  color: #111111;
+  border-color: #ffffff;
+}
+
+.btn.btn-secondary-custom:hover {
+  transform: scale(1.1);
+}
+
+.btn.btn-secondary-custom:active {
+  transform: scale(1.1);
+}
+
+
+/* three images below */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30vw, 1fr)); 
+    gap: 1rem;
+}
+
+.grid-item {
+    position: relative;
+    display: inline-block;
+}
+
+.grid-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 30rem;
+    max-height: 30rem;
+    height: auto;
+    max-width: 100%;
+    border-radius: 1rem; 
+    margin-top: 1.5rem;
+    box-shadow: -0.3vw 0.3vw 0.8vw #707070;
+}
+
+.grid-text {
+    position: absolute;
+    bottom: 5%; 
+    left: 50%; 
+    transform: translateX(-50%);
+    background-color: rgba(49, 49, 49, 0.41);
+    border-radius: 0.5vw;
+    color: rgb(255, 255, 255);
+    padding: 5px 10px; 
+    font-size: 2rem; 
+    transition: background-color 0.3s ease;
+    margin-bottom: 17rem;
+    white-space: nowrap;
+}
+
+/* Optional: Hover effect */
+.grid-item:hover .grid-text {
+    background-color: rgba(49, 49, 49, 1);
+}
+
+.description-text {
+    margin-top: 30px;
+    color: rgb(49, 49, 49); 
+    font-size: 1.5rem;
+    text-align: justify;
+    text-justify: inter-word;
+    padding-right: 6vh;
+    padding-left: 4vh;
+}
+
+/* Recommendations css */
+.custom-margin-left {
+  margin-left: 30px; 
+}
+
+.custom-margin-right {
+  margin-right: 420px; 
+}
+
+.image-container {
+  text-align: center;
+}
+
+#text-seemore {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  margin-right: 24rem;
+}
+
+#text-recommend {
+  font-size: 2rem;
+}
+
+#text-sub-recommend{
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .grid-image {
+    width: 100%;
+    height: auto;
+}
+
+  .grid-text {
+    font-size: 1rem; 
+    margin-bottom: 23rem;
+    white-space: nowrap;
+  }
+
+  .description-text {
+    font-size: 0.8rem;
+}
+
+  #text-seemore {
+    font-size: 1rem;
+    margin-right: 7rem;
+    white-space: nowrap;
+  }
+}
+
+
+/* footer css */
+.footer-black {
+  background-color: #313131;
+  height: 4vw;
+  width: auto;
+  color: white;
+}
+
+.footer-text-white {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  padding-right: 1.5rem;
+}
+
+.footer-text-white img{
+  width: 10%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .footer-black {
+    height:20%;
+    width: auto;
+  }
+
+  .footer-text-white img{
+    width: 15%;
+    align-items: baseline;
+    padding-right: 1rem;
+  }
+}
+
+/* checkboxform */
+.container-md-custom {
+  background-color: #f9f9f9;
+  width: 70%;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.251);
+  margin-bottom: 50px;
+}
+
+@media (max-width: 768px) {
+  .container-md-custom {
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.251);
+    margin-bottom: 25px;
+  }
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: baseline;
+}
+
+.label-checkbox {
+  display: inline-block;
+  margin-left: 10%;
+  margin-top: 3%;
+  font-size: 18px;
+  white-space: nowrap;
+}
+
+.label-checkbox-custom {
+  display: inline-block;
+  margin-top: 3%;
+  font-size: 18px;
+  white-space: nowrap;
+  align-items: baseline;
+  text-decoration: underline;
+}
+
+.form-check {
+  margin-left: 100px;
+}
+
+.form-check-input{
+  border: 2px solid black;
+  margin-right: 5px;
+}
+
+.form-check-input-custom{
+  margin-left: 6.5rem;
+}
+
+.form-check-input .form-check-label{
+  margin-top: 10%;
+}
+
+.asterisk {
+  color: red;
+}
+
+
+.fixed-buttons {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end; 
+}
+
+.custom-next {
+  background-color: #111;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 550;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, font-weight 0.3s ease;
+  border: none;
+  margin-top: 20px;
+}
+
+.custom-next:hover {
+font-weight: 700;
+border: 1px solid black;
+}
+
+.custom-next:active {
+background-color: #111;
+color: #ffffff;
+border: 1px solid black;
+}
+
+@media (max-width: 768px) {
+  .fixed-buttons {
+    justify-content: center;
+  }
+}
+
+
+/* calendar css */
+/* .calendar-container{
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+} */
+
+.calendar {
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    background-color: #f9f9f9;
+    border-radius: 25px;
+    overflow: hidden;
+    padding: 5% 5%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.calendar-header {
+    background: #ebebeb;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 7px;
+    align-items: center;
+    font-weight: 700;
+    color: #111;
+    padding: 2% 5%; /* Use percentages for padding */
+}
+
+.calendar-body,
+.calendar-week-days,
+.calendar-days {
+    padding: 2% 2%; /* Use percentages for padding */
+}
+
+.calendar-week-days {
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: 600;
+    cursor: pointer;
+    color: #111;
+}
+
+.calendar-week-days div {
+    flex: 1 0 calc(100% / 7); /* Distribute equally among 7 days */
+    text-align: center;
+    padding: 10px; /* Add padding to each day element */
+}
+
+.calendar-week-days div:hover {
+    color: black;
+    transform: scale(1.2);
+    transition: all .2s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .calendar-header,
+    .calendar-body,
+    .calendar-week-days,
+    .calendar-days {
+        padding: 2% 2%; /* Adjusted padding for smaller screens */
+    }
+
+    .calendar-week-days div {
+        flex-basis: calc(100% / 7); /* Adjust basis for smaller screens */
+    }
+
+    .month-list {
+        top: -150px; /* Adjust top position */
+    }
+
+    .month-list>div {
+        margin: 5px 5px; /* Adjust margin */
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-header {
+        padding: 2% 2%; /* Further adjustment for smaller screens */
+    }
+
+    .month-list {
+        top: -170px; /* Further adjustment for smaller screens */
+    }
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    text-align: center;
+    gap: 2px;
+    color: #0A0921;
+}
+
+.calendar-days div {
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2%;
+    position: relative;
+    cursor: pointer;
+    animation: to-top 1s forwards;
+    margin: 0 auto;
+}
+
+
+.calendar-days div span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.month-picker {
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.month-picker:hover {
+    background-color: #ffffff;
+    color: #111;
+    transition: all .2s ease-in-out;
+    transform: scale(1.12);
+  }
+
+.year-picker {
+  display: flex;
+  align-items: center;
+}
+
+.year-change {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.year-change:hover {
+  background-color: #ffffff;
+  transition: all .2s ease-in-out;
+  transform: scale(1.12);
+}
+
+.calendar-footer {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#year:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: all 0.2 ease-in-out;
+}
+
+.calendar-days div span {
+  position: absolute;
+}
+
+.calendar-days div:hover {
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out, font-weight 0.2s ease-in-out, font-size 0.2s ease-in-out;
+  background-color: #111;
+  font-weight: 500;
+  font-size: 24px;
+  border-radius: 20%;
+  color: #f8fbff;
+}
+
+.calendar-days div.current-date {
+  color: #f8fbff;
+  background-color: #9796f0;
+  border-radius: 20%;
+}
+
+.month-list {
+  position: relative;
+  left: 0;
+  top: -130px;
+  background-color: #ebebeb;
+  color: #151426;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr); 
+  gap: 5px;
+  border-radius: 20px;
+  display: none;
+  overflow: hidden;
+
+}
+
+
+@media (max-width: 768px) {
+  .month-list {
+    grid-template-columns: repeat(3, 1fr); 
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+
+
+.month-list>div {
+  display: grid;
+  place-content: center;
+  margin: 5px 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.month-list>div>div {
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.month-list>div>div:hover {
+  background-color: #111;
+  color: #f8fbff;
+  transform: scale(0.9);
+  transition: all 0.2s ease-in-out;
+}
+
+.month-list.show {
+  visibility: visible;
+  pointer-events: visible;
+  transition: 0.6s ease-in-out;
+  animation: to-left .71s forwards;
+  display: grid;
+}
+
+.month-list.hideonce {
+  visibility: hidden;
+  display: none;
+}
+
+.month-list.hide {
+  animation: to-right 1s forwards;
+  visibility: none;
+  pointer-events: none;
+}
+
+.month-list.hide.done {
+  display: none;
+}
+
+.date-time-formate {
+    height: auto;
+    width: 100%;
+    font-family: Dubai Light, Century Gothic;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10%;
+    justify-content: center;
+    align-items: center;
+}
+
+.day-text-formate {
+    font-family: Microsoft JhengHei UI;
+    font-size: 1.4rem;
+    padding-right: 8%;
+    border-right: 3px solid #9796f0;
+    margin-bottom: 10px; /* Add margin bottom for spacing */
+}
+
+.date-time-value {
+    display: block;
+    position: relative;
+    text-align: center;
+    padding-left: 6%;
+    margin-right: 30px;
+}
+
+.time-formate {
+  font-size: 1.5rem;
+}
+
+.time-formate.hideTime {
+  animation: hidetime 1.5s forwards;
+}
+
+.day-text-formate.hidetime {
+  animation: hidetime 1.5s forwards;
+}
+
+.date-formate.hideTime {
+  animation: hidetime 1.5s forwards;
+}
+
+.day-text-formate.showtime {
+  animation: showtime 1.5s forwards;
+}
+
+.time-formate.showtime {
+  animation: showtime 1s forwards;
+}
+
+.date-formate.showtime {
+  animation: showtime 1s forwards;
+}
+
+@keyframes to-top {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(100%);
+    opacity: 1;
+  }
+}
+
+@keyframes to-left {
+  0% {
+    transform: translatex(230%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translatex(0);
+    opacity: 1;
+  }
+}
+
+@keyframes to-right {
+  10% {
+    transform: translatex(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translatex(-150%);
+    opacity: 1;
+  }
+}
+
+@keyframes showtime {
+  0% {
+    transform: translatex(250%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translatex(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes hidetime {
+  0% {
+    transform: translatex(0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translatex(-400%);
+    opacity: 1;
+  }
+}
+
+.disabled,
+.wednesday {
+  pointer-events: none;
+  opacity: 0.5 !important;
+  cursor: default;
+}
+
+.clicked-date {
+  background-color: #f6ff54;
+  border-radius: 8px;
+  font-weight: 700;
+  border: 1px solid #737815;
+}
+
+/* Default styling for day labels */
+.calendar-week-days div {
+  text-align: center;
+}
+
+/* Media query for smaller screen sizes */
+@media screen and (max-width: 768px) {
+  /* Truncate day labels to only display first letter */
+  .calendar-week-days div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+
+/* time buttons */
+.parent {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  grid-gap: 20px;
+}
+
+.btn-grid-container {
+  display: flex;
+  justify-content: center;
+}
+
+.div1 { grid-area: 1 / 1 / 2 / 2; }
+.div2 { grid-area: 1 / 2 / 2 / 3; }
+.div3 { grid-area: 1 / 3 / 2 / 4; }
+.div4 { grid-area: 2 / 1 / 3 / 2; }
+.div5 { grid-area: 2 / 2 / 3 / 3; }
+.div6 { grid-area: 2 / 3 / 3 / 4; }
+.div7 { grid-area: 3 / 1 / 4 / 2; }
+.div8 { grid-area: 3 / 2 / 4 / 3; }
+.div9 { grid-area: 3 / 3 / 4 / 4; }
+.div10 { grid-area: 4 / 2 / 5 / 3; }
+
+.btn.time-buttons {
+  width: 100%;
+  max-width: none;
+  background-color: #313131;
+  color: #ffffff;
+  font-size: 2vw;
+  font-weight: 550;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, font-size 0.3s ease-in-out;
+  border: 1px solid #313131;
+  margin-top: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.btn.time-buttons:hover {
+  font-size: 25px;
+  background-color: #111111;
+}
+
+.btn.companion-btn{
+  width: 100%;
+  max-width: none;
+  background-color: #313131;
+  color: #ffffff;
+  font-size: 2vw;
+  font-weight: 550;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, font-size 0.3s ease-in-out;
+  border: 1px solid #313131;
+  margin-top: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+/* .btn.time-buttons:active {
+  background-color: #ffffff; 
+  font-size: 25px; 
+} */
+
+.btn.time-buttons.highlight {
+  background-color: #f6ff54;
+  color: #313131;
+}
+
+.btn.companion-btn.highlight {
+  background-color: #f6ff54;
+  color: #313131;
+}
+
+/* text inputs */
+
+.form-control{
+  margin: auto;
+  width: 80%;
+  height: auto;
+  border: 1px solid black;
+}
+
+.tall-input {
+  margin: auto;
+  width: 80%;
+  height: 18rem;
+  border: 1px solid black;
+  resize: vertical;
+}
+
+/* no of companions */
+
+.parent-comp {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  grid-gap: 10px;
+  justify-content: center;
+}
+
+/* click effect on terms and conditions */
+.click-effect {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.click-effect:active {
+  transform: scale(0.95);
+} 
+
+/* about us css */
+#about-us {
+  padding-left: 5rem;
+  font-size: 2rem;
+}
+
+.parent-comp-abt-us {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  grid-gap: 10px;
+  justify-content: center;
+}
+
+.description-text-custom {
+  margin-top: 2rem;
+  padding-left: 5rem;
+  padding-right: 3rem;
+}
+
+#about_us_img {
+  padding: 0;
+  display: block;
+  margin: auto;
+  max-width: 40rem;
+  max-height: 40rem;
+  position: relative;
+  border-radius: 1rem;
+  box-shadow: -0.3vw 0.3vw 0.8vw #707070;
+}
+
+@media screen and (max-width: 768px) {
+  .parent-comp {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+
+  .parent-comp-abt-us {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+
+  #about_us_img {
+    max-width: 20rem;
+    max-height: 20rem;
+  }
+}
+
+/* Add this CSS for the confirmation overlay */
+#confirmationModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px); /* Adjust the blur radius as needed */
+}
+
+
+.modal-content-c {
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 10px;
+}
+
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+/* Additional styles for the confirmation modal */
+#userInputs {
+  /* list-style-type: none; */
+  padding: 0;
+}
+
+#userInputs li {
+  margin-bottom: 10px;
+}
+
+.custom-modal-content {
+  max-width: 700px; /* Adjust the maximum width as needed */
+  border-radius: 20px; /* Adjust the border-radius as needed */
+  padding: 20px; /* Adjust the padding as needed */
+}
+
+#addLocationModal .custom-modal-content  {
+  max-width: 500px; /* Adjust the maximum width as needed */
+}
+
+#addloc.custom-submit, #closeloc.custom-cancel{
+  width: 150px;
+}
+
+/*Success Modal */
+
+#successModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.success-modal-content {
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Adjust the width as needed */
+  border-radius: 10px;
+  text-align: center;
+}
+
+#successModal .close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+#successModal .close:hover,
+#successModal .close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+#successModal #userInputs {
+list-style-type: none;
+padding: 0;
+}
+
+#successModal #userInputs li {
+margin-bottom: 10px;
+}
+
+#successModal .custom-modal-content {
+max-width: 700px; /* Adjust the maximum width as needed */
+border-radius: 10px; /* Adjust the border-radius as needed */
+padding: 20px; /* Adjust the padding as needed */
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+/* Add the following styles for centering the modal */
+#successModal .success-modal-content {
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+}
+
+.custom-title{
+  color: #ba181b;
+  font-size: 32px;
+  font-weight: bold;
+  /* letter-spacing: 2px; */
+  margin: 0%;
+  padding: 0%;
+}
+
+.custom-title2{
+  color: #04B300;
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.custom-button2{
+  width: 328px;
+  height: 54px;
+  flex-shrink: 0;
+  background-color: #1E1E1E;
+  color: #ffffff;
+  border-radius: 39px;
+  mix-blend-mode: darken;
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.25);
+  align-items: center;
+  justify-content: center;
+}
+
+#successModal .custom-modal-content .custom-button2 {
+  margin-top: 20px; /* Adjust the margin as needed */
+}
+
+
+.confirmation-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.confirmation-label {
+  flex-basis: 50%; /* Adjust the width of the label */
+  text-align: right; /* Align the text to the right */
+  padding-right: 50px; /* Add more spacing between label and value */
+  font-weight: bold; /* Make the text bold */
+}
+
+.confirmation-value {
+  flex-basis: 50%; /* Adjust the width of the value */
+  text-align: left;
+  color: #04B300;
+}
+
+/* Add this style to your existing CSS or in a style tag in your HTML */
+th.no-sort::before,
+th.no-sort::after {
+    content: none !important;
+} 
+
+
+#deleteModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+  padding: 0;
+  backdrop-filter: blur(3px); /* Adjust the blur radius as needed */
+}
+
+#deleteModalContent {
+  display: flex;
+  flex-direction: column; /* Stack child elements vertically */
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #888;
+  width: 30%; /* Adjust the width as needed */
+  border-radius: 40px;
+  text-align: center;
+}
+
+#deleteModalContent .d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#deleteModalContent .d-flex button {
+  margin: 0 10px; /* Adjust horizontal margin as needed */
+}
+
+#successDeleteModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px); /* Adjust the blur radius as needed */
+}
+
+
+.success-modal-content {
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Adjust the width as needed */
+  border-radius: 10px;
+  text-align: center;
+}
+
+#successDeleteModal .close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+#successDeleteModal .close:hover,
+#successDeleteModal .close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+#successDeleteModal #userInputs {
+list-style-type: none;
+padding: 0;
+}
+
+#successDeleteModal #userInputs li {
+margin-bottom: 10px;
+}
+
+#successDeleteModal .custom-modal-content {
+max-width: 500px; /* Adjust the maximum width as needed */
+border-radius: 30px; /* Adjust the border-radius as needed */
+padding: 30px; /* Adjust the padding as needed */
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+/* Add the following styles for centering the modal */
+#successDeleteModal .success-modal-content {
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+}
+
+
+#successDeleteModal .close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+#successDeleteModal .close:hover,
+#successDeleteModal .close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+
+#successDeleteModal #userInputs {
+list-style-type: none;
+padding: 0;
+}
+
+#successDeleteModal #userInputs li {
+margin-bottom: 10px;
+}
+
+#successDeleteModal .custom-modal-content {
+max-width: 500px; /* Adjust the maximum width as needed */
+border-radius: 30px; /* Adjust the border-radius as needed */
+padding: 30px; /* Adjust the padding as needed */
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+/* Add the following styles for centering the modal */
+#successDeleteModal .success-modal-content {
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+}
