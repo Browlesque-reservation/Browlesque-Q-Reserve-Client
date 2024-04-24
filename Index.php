@@ -1,3 +1,10 @@
+<?php
+   // define('INCLUDED', true);
+   require_once('connect.php');
+   
+   $query = "SELECT service_id, service_name, service_description, service_image FROM services";
+   $result = mysqli_query($conn, $query);
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,7 +49,7 @@
     <button type="button" class="btn btn-primary btn-primary-custom" onclick="window.location.href='book_appointment1.php'">BOOK YOUR APPOINTMENT NOW HERE!</button>
   </div>
 
-    <div class="grid-container mt-2">
+    <!-- <div class="grid-container mt-2">
         <div class="grid-item">
             <img class="grid-image" src="./assets/images/pictures/microblading1.webp" alt="Image 1">
             <div class="grid-text">Lorem Ipsum</div>
@@ -58,6 +65,28 @@
             <div class="grid-text">Lorem Ipsum</div>
             <div class="description-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita hic voluptatum dolorum nobis laudantium. Dolor et enim culpa. Deleniti quos autem ex odio vero esse fugit amet velit fugiat nemo.</div>
         </div>
+    </div> -->
+    <div class="grid-container mt-2">
+<?php
+                // Check if there are any services
+                if (mysqli_num_rows($result) > 0) {
+                    // Loop through each service
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $service_id = $row['service_id'];
+                        $service_name = $row['service_name'];
+                        $service_description = $row['service_description'];
+                        $service_image = $row['service_image'];
+                        ?>
+                        <div class="grid-item">
+                            <img class="grid-image" src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
+                            <div class="grid-text"><?php echo $service_name; ?></div>
+                            <div class="description-text"><?php echo $service_description; ?></div>
+                        </div>
+                    <?php }
+                } else {
+                    echo "No services found.";
+                }
+                ?>
     </div>
 
     <h2 class="fw-bold mt-5 text-start custom-margin-left" id="text-recommend">Most Recommended</h2>
