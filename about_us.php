@@ -35,7 +35,7 @@
 </nav>
 
 <div class="container-fluid">
-  <div class="fw-bold mt-2" id="browlesque">BROWLESQUE</div>
+  <div class="fw-bold mt-2" id="title">BROWLESQUE</div>
     <div class="parent-comp-abt-us mb-3">
       <div class="div15">
         <div class="fw-bold text-start" id="about-us">ABOUT US</div>

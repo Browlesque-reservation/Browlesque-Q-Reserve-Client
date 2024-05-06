@@ -4,6 +4,17 @@
    
    $query = "SELECT service_id, service_name, service_description, service_image FROM services";
    $result = mysqli_query($conn, $query);
+
+   $query1 = "SELECT promo_id, promo_details, promo_image FROM promo";
+   $result1 = mysqli_query($conn, $query1);
+
+   if (!$result1) {
+    echo "Error: " . mysqli_error($conn);
+    exit();
+}
+
+// Count the number of rows
+$totalPromos = mysqli_num_rows($result1);
 ?>
 <!doctype html>
 <html lang="en">
@@ -38,93 +49,157 @@
                 </li>
             </ul>
         </div>
+        </div>
     </div>
 </nav>
 
 <div class="container-fluid">
-  <h1 class="fw-bold mt-2" id="browlesque">BROWLESQUE</h1>
-    <img src="./assets/images/pictures/microblading2.jpg" id="microblading2" alt="First Image">
-
-  <div class="button-appoint">
-    <button type="button" class="btn btn-primary btn-primary-custom" onclick="window.location.href='book_appointment1.php'">BOOK YOUR APPOINTMENT NOW HERE!</button>
+  <div class="container-flex add-white-bg">
+    <div class="welcome-container container">
+        <div class="left-content">
+            <div class="mt-2" id="browlesque">Welcome to Browlesque!</div>
+            <div class="sub-text">Take this opportunity to have the brows and natural pinkish youthful lips you have always wanted!</div>
+            <div class="button-appoint mt-0">
+                <button type="button" class="btn btn-primary btn-primary-custom book-now" onclick="window.location.href='book_appointment1.php'">BOOK NOW</button>
+            </div>
+        </div>
+        <img src="./assets/images/pictures/face.svg" id="microblading2" alt="First Image" class="right-content">
+    </div>
   </div>
 
-    <!-- <div class="grid-container mt-2">
-        <div class="grid-item">
-            <img class="grid-image" src="./assets/images/pictures/microblading1.webp" alt="Image 1">
-            <div class="grid-text">Lorem Ipsum</div>
-            <div class="description-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium consectetur repellat ratione sint reiciendis impedit nostrum aut explicabo ipsa velit aperiam assumenda rem ipsum dicta sunt, quidem dignissimos quas sequi!</div> 
-        </div>
-        <div class="grid-item">
-            <img class="grid-image" src="./assets/images/pictures/microblading1.webp" alt="Image 2">
-            <div class="grid-text">Lorem Ipsum</div>
-            <div class="description-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam omnis deleniti libero ut ratione eius distinctio quos, voluptatibus harum pariatur. Repellendus illum dicta qui alias nemo dolorum itaque expedita incidunt.</div> 
-        </div>
-        <div class="grid-item">
-            <img class="grid-image" src="./assets/images/pictures/microblading1.webp" alt="Image 3">
-            <div class="grid-text">Lorem Ipsum</div>
-            <div class="description-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita hic voluptatum dolorum nobis laudantium. Dolor et enim culpa. Deleniti quos autem ex odio vero esse fugit amet velit fugiat nemo.</div>
-        </div>
-    </div> -->
-    <div class="grid-container mt-2">
-<?php
-                // Check if there are any services
-                if (mysqli_num_rows($result) > 0) {
-                    // Loop through each service
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $service_id = $row['service_id'];
-                        $service_name = $row['service_name'];
-                        $service_description = $row['service_description'];
-                        $service_image = $row['service_image'];
-                        ?>
-                        <div class="grid-item">
-                            <img class="grid-image" src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
-                            <div class="grid-text"><?php echo $service_name; ?></div>
-                            <div class="description-text"><?php echo $service_description; ?></div>
-                        </div>
-                    <?php }
-                } else {
-                    echo "No services found.";
-                }
-                ?>
+  <div class="services-container container-flex">
+    <div class="container add-pb">
+    <h1 class="mt-2 text-center" id="services_label">Our Services</h1>
+      <div class="mt-2 grid-container-services">
+        <?php
+          // Check if there are any services
+          if (mysqli_num_rows($result) > 0) {
+             // Loop through each service
+            while ($row = mysqli_fetch_assoc($result)) {
+              $service_id = $row['service_id'];
+              $service_name = $row['service_name'];
+              $service_description = $row['service_description'];
+              $service_image = $row['service_image'];
+        ?>
+          <div class="grid-item">
+            <div class="grid-text"><?php echo $service_name; ?></div>
+            <img class="grid-image" src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
+            <div class="description-text" id="text_service"><?php echo $service_description; ?></div>
+            <button type="button" id="read_button_<?php echo $service_id; ?>" class="btn read-button mt-4 ml-4">READ MORE</button>
+          </div>
+            <?php }
+              } else {
+                  echo "No services found.";
+                  }
+            ?>
+      </div>
     </div>
+  </div>
 
-    <h2 class="fw-bold mt-5 text-start custom-margin-left" id="text-recommend">Most Recommended</h2>
-    <h4 class="fw-lighter text-start custom-margin-left text-muted" id="text-sub-recommend">Loved by clients!</h4>
+  <div class="container-flex add-white-bg">
+    <div class="container">
+        <h1 class="mt-2 text-center" id="people_label">People's Choice</h1>
+      <div class="people-container">
+          <!-- left position -->
+          <img src="./assets/images/pictures/microblading2.jpg" id="people-choice" alt="People Choice" class="circle-pic">
+          <!-- right position -->
+          <div class="pc-desc-container">
+            <div class="sub-text">Our Microblading and Lip Tattoo Service is availed by more than a hundred clients! Book now and be one to experience this!</div>
+          </div>
+      </div>
+    </div>
+  </div>
 
-    <div class="image-container">
-        <img src="./assets/images/pictures/microblading2.jpg" id="microblading2" class="mt-5" alt="First Image">
-        <div class="text-end">
-          <h4 class="fw-lighter mt-4 text-muted text-decoration-underline" id="text-seemore">See more information</h4>
+  <div class="container-flex add-gray-bg">
+    <div class="container">
+      <div class="promo-container">
+        <div class="promo-welcome">
+          <h1 class="mt-2 text-center" id="just-promos">Just for you promos!</h1>
+          <div class="sub-text sub-text-r">Avail now to get quality services in lower price</div>
         </div>
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <?php for ($i = 0; $i < $totalPromos; $i++) : ?>
+                    <button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $i; ?>" <?php echo ($i == 0) ? 'class="active"' : ''; ?>></button>
+                <?php endfor; ?>
+            </div>
+
+            <!-- Carousel items with dynamic data -->
+            <div class="carousel-inner">
+                <?php
+                $index = 0;
+                while ($row = mysqli_fetch_assoc($result1)) :
+                    ?>
+                    <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
+                        <img class="d-block custom-image" src="image.php?promo_id=<?php echo $row['promo_id']; ?>" alt="<?php echo $row['promo_details']; ?>">
+                    </div>
+                    <?php
+                    $index++;
+                endwhile;
+                ?>
+            </div>
+
+            <!-- Carousel controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+      </div>
+      <div class="see-more text-left"><a href="#">See more information</a></div>
+    </div>
+  </div>
+
+  <div class="container-flex add-white-bg">
+    <div class="container">
+      <div class="people-container">
+          <!-- left position -->
+          <img src="./assets/images/pictures/browlesque.svg" id="browlesque-img" alt="Browlesque Image" class="about-us-img">         
+          <!-- right position -->
+          <div class="about-us-text">  
+            <h1 class="mt-2 abt-center" id="about_label">About Us</h1>
+            <div class="sub-text sub-text-m">The Hollywood celebrities and star's choices for best Microblading eyebrows, scalp and other micropigmentation procedures.<br><br>Take this opportunity to have the brows and natural pinkish youthful lips you have always wanted!</div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="container-flex add-black-bg">
+      <div class="container">
+        <div class="footer-container d-flex justify-content-between">
+          <div class="contact-us">
+            <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
+          </div>
+          <div class="contacts">
+            <ul class="nav d-flex align-items-center justify-content-end">
+              <li class="ms-3">
+                <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
+                  <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon"> Browlesque Cavite
+                </a>
+              </li>
+              <li class="ms-3">
+                <span class="footer-text-white">
+                  <img src="./assets/images/icon/Phone.svg" alt="Phone Icon"> 09123456789
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
 
 </div>
 
 
-  <footer class="container-fluid d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top footer-black">
-    <div class="col-md-4 d-flex align-items-center">
-      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      </a>
-      <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
-    </div>
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li class="ms-3">
-        <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
-          <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon">
-          Browlesque Cavite
-        </a>
-      </li>
-      <li class="ms-3">
-        <span class="footer-text-white">
-          <img src="./assets/images/icon/Phone.svg" alt="Phone Icon">
-          09123456789
-        </span>
-      </li>
-    </ul>
-  </footer>
-
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="./assets/js/text.js"></script>
+<script src="./assets/js/carousel.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 </html>

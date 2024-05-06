@@ -1,5 +1,4 @@
 <?php
-    // define('INCLUDED', true);
     require_once('connect.php'); // Include your database connection script
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,10 +18,23 @@
             $serviceIDs = implode(',', $_POST['service_id']);
             $promoIDs = implode(',', $_POST['promo_id']);
 
-            // Prepare and execute SQL INSERT statement
-            $query = "INSERT INTO client_appointment (service_id, promo_id, client_date, start_time, end_time, client_name, client_contactno, no_of_companions, client_notes, terms_conditions, status) 
-                      VALUES ('$serviceIDs', '$promoIDs', '$clientDate', '$startTime', '$endTime', '$clientName', '$clientContactNo', '$noOfCompanions', '$clientNotes', '$termsConditions', 'pending')";
+            // Prepare and execute SQL INSERT statement for client_appointment
+            $query = "INSERT INTO client_appointment (service_id, promo_id, client_date, start_time, end_time, terms_conditions, status) 
+                      VALUES ('$serviceIDs', '$promoIDs', '$clientDate', '$startTime', '$endTime', '$termsConditions', 'Pending')";
             $result = mysqli_query($conn, $query);
+            
+            // Get the last inserted appointment ID
+            $lastAppointmentID = mysqli_insert_id($conn);
+
+            // Prepare and execute SQL INSERT statement for client_details
+            $query_details = "INSERT INTO client_details (client_name, client_contactno, no_of_companions, client_notes, appointment_id) 
+                              VALUES ('$clientName', '$clientContactNo', '$noOfCompanions', '$clientNotes', '$lastAppointmentID')";
+            $result_details = mysqli_query($conn, $query_details);
+            
+            if (!$result || !$result_details) {
+                // Handle the error, if any
+                echo "Error: " . mysqli_error($conn);
+            }
         }
 
         header("Location: Index.php");

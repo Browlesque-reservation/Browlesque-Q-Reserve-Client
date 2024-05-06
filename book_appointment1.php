@@ -43,7 +43,7 @@
          </div>
       </nav>
       <div class="container-fluid">
-         <h1 class="fw-bold mt-2" id="browlesque">BOOK YOUR APPOINTMENT</h1>
+         <h1 class="fw-bold mt-2" id="title">BOOK YOUR APPOINTMENT</h1>
          <div class="container-md container-md-custom" id="dropdown-container">
             <form id="appointmentForm" method="POST" action="insert.php" onsubmit="event.preventDefault(); showConfirmationModal();">
                <span class="label-checkbox mb-2"><span class="asterisk">*</span>Type of Service to be Availed: </span><br>
@@ -180,7 +180,7 @@
                         Launch static backdrop modal
                         </button>
                      </div>
-                     <div class="button-appoint">
+                     <div class="button-appoint-in btn-center">
                         <button type="submit" name="client_submit" class="btn btn-primary btn-primary-custom fs-4">BOOK NOW!</button>
                      </div>
                   </div>
@@ -188,30 +188,29 @@
             </form>
          </div>
       </div>
-      <footer class="container-fluid d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top footer-black">
-         <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-               <svg class="bi" width="30" height="24">
-                  <use xlink:href="#bootstrap"/>
-               </svg>
-            </a>
-            <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
+      <div class="container-flex add-black-bg">
+         <div class="container">
+         <div class="footer-container d-flex justify-content-between">
+            <div class="contact-us">
+               <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
+            </div>
+            <div class="contacts">
+               <ul class="nav d-flex align-items-center justify-content-end">
+               <li class="ms-3">
+                  <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
+                     <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon"> Browlesque Cavite
+                  </a>
+               </li>
+               <li class="ms-3">
+                  <span class="footer-text-white">
+                     <img src="./assets/images/icon/Phone.svg" alt="Phone Icon"> 09123456789
+                  </span>
+               </li>
+               </ul>
+            </div>
          </div>
-         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3">
-               <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
-               <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon">
-               Browlesque Cavite
-               </a>
-            </li>
-            <li class="ms-3">
-               <span class="footer-text-white">
-               <img src="./assets/images/icon/Phone.svg" alt="Phone Icon">
-               09123456789
-               </span>
-            </li>
-         </ul>
-      </footer>
+         </div>
+      </div>
 
       <!-- Terms and Service Modal -->
       <div class="modal fade" id="termsAndConditions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="termsAndConditionsLabel" aria-hidden="true">
