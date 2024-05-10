@@ -68,33 +68,33 @@ $totalPromos = mysqli_num_rows($result1);
   </div>
 
   <div class="services-container container-flex">
-    <div class="container add-pb">
-    <h1 class="mt-2 text-center" id="services_label">Our Services</h1>
-      <div class="mt-2 grid-container-services">
-        <?php
-          // Check if there are any services
-          if (mysqli_num_rows($result) > 0) {
-             // Loop through each service
-            while ($row = mysqli_fetch_assoc($result)) {
-              $service_id = $row['service_id'];
-              $service_name = $row['service_name'];
-              $service_description = $row['service_description'];
-              $service_image = $row['service_image'];
-        ?>
-          <div class="grid-item">
-            <div class="grid-text"><?php echo $service_name; ?></div>
-            <img class="grid-image" src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
-            <div class="description-text" id="text_service"><?php echo $service_description; ?></div>
-            <button type="button" id="read_button_<?php echo $service_id; ?>" class="btn read-button mt-4 ml-4">READ MORE</button>
-          </div>
-            <?php }
-              } else {
-                  echo "No services found.";
-                  }
+    <div class="container add-pb pb-4">
+        <h1 class="mt-2 text-center" id="services_label">Our Services</h1>
+        <div class="mt-2 grid-container-services">
+            <?php
+            // Check if there are any services
+            if (mysqli_num_rows($result) > 0) {
+                // Loop through each service
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $service_id = $row['service_id'];
+                    $service_name = $row['service_name'];
+                    $service_description = $row['service_description'];
+                    $service_image = $row['service_image'];
+                    ?>
+                    <div class="grid-item">
+                        <div class="grid-text"><?php echo $service_name; ?></div>
+                        <img class="grid-image" src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
+                        <div class="description-text" id="text_service"><?php echo $service_description; ?></div>
+                        <button type="button" id="read_button_<?php echo $service_id; ?>" class="btn read-button mt-4 ml-4" onclick="redirectToServicePage(<?php echo $service_id; ?>)">READ MORE</button>
+                    </div>
+                <?php }
+            } else {
+                echo "No services found.";
+            }
             ?>
-      </div>
+        </div>
     </div>
-  </div>
+</div>
 
   <div class="container-flex add-white-bg">
     <div class="container">
@@ -150,7 +150,7 @@ $totalPromos = mysqli_num_rows($result1);
             </button>
         </div>
       </div>
-      <div class="see-more text-left"><a href="#">See more information</a></div>
+      <div class="see-more text-left"><a href="promos.php">See more information</a></div>
     </div>
   </div>
 
@@ -163,13 +163,14 @@ $totalPromos = mysqli_num_rows($result1);
           <div class="about-us-text">  
             <h1 class="mt-2 abt-center" id="about_label">About Us</h1>
             <div class="sub-text sub-text-m">The Hollywood celebrities and star's choices for best Microblading eyebrows, scalp and other micropigmentation procedures.<br><br>Take this opportunity to have the brows and natural pinkish youthful lips you have always wanted!</div>
+            <div class="sub-text sub-text-m mt-0 add-bold"><br>Located at 12 Real Street Bacoor, Cavite, Philippines.</div>
           </div>
       </div>
     </div>
   </div>
 
 
-    <div class="container-flex add-black-bg">
+  <div class="container-flex add-black-bg">
       <div class="container">
         <div class="footer-container d-flex justify-content-between">
           <div class="contact-us">
@@ -177,6 +178,11 @@ $totalPromos = mysqli_num_rows($result1);
           </div>
           <div class="contacts">
             <ul class="nav d-flex align-items-center justify-content-end">
+              <li class="ms-3">
+                <span class="footer-text-white">
+                  <img src="./assets/images/icon/email.svg" alt="Email Icon"> browlesque@gmail.com
+                </span>
+              </li>
               <li class="ms-3">
                 <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
                   <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon"> Browlesque Cavite
@@ -200,6 +206,13 @@ $totalPromos = mysqli_num_rows($result1);
 <script src="./assets/js/text.js"></script>
 <script src="./assets/js/carousel.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+    function redirectToServicePage(serviceId) {
+        // You can redirect the user to a specific page based on the service ID
+        window.location.href = 'service.php?service_id=' + serviceId;
+    }
+</script>
 
 </body>
 </html>
