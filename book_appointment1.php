@@ -43,7 +43,7 @@
          </div>
       </nav>
       <div class="container-fluid">
-         <h1 class="fw-bold mt-2" id="browlesque">BOOK YOUR APPOINTMENT</h1>
+         <h1 class="fw-bold mt-2" id="title">BOOK YOUR APPOINTMENT</h1>
          <div class="container-md container-md-custom" id="dropdown-container">
             <form id="appointmentForm" method="POST" action="insert.php" onsubmit="event.preventDefault(); showConfirmationModal();">
                <span class="label-checkbox mb-2"><span class="asterisk">*</span>Type of Service to be Availed: </span><br>
@@ -158,10 +158,10 @@
                         <div class="btn-grid-container">
                            <label for="no_of_companions" class="label-checkbox mb-2 me-4 text-center"><span class="asterisk text-center">*</span>No. of Companions:</label>
                            <div class="parent-comp mb-3">
-                              <div class="div11"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="1">1</button></div>
-                              <div class="div12"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="2">2</button></div>
-                              <div class="div13"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="3">3</button></div>
-                              <div class="div14"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="4">4</button></div>
+                              <div class="div11"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="0">0</button></div>
+                              <div class="div12"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="1">1</button></div>
+                              <div class="div13"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="2">2</button></div>
+                              <div class="div14"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="3">3</button></div>
                            </div>
                         </div>
                      </div>
@@ -180,7 +180,7 @@
                         Launch static backdrop modal
                         </button>
                      </div>
-                     <div class="button-appoint">
+                     <div class="button-appoint-in btn-center">
                         <button type="submit" name="client_submit" class="btn btn-primary btn-primary-custom fs-4">BOOK NOW!</button>
                      </div>
                   </div>
@@ -188,30 +188,34 @@
             </form>
          </div>
       </div>
-      <footer class="container-fluid d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top footer-black">
-         <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-               <svg class="bi" width="30" height="24">
-                  <use xlink:href="#bootstrap"/>
-               </svg>
-            </a>
+   <div class="container-flex add-black-bg">
+      <div class="container">
+        <div class="footer-container d-flex justify-content-between">
+          <div class="contact-us">
             <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
-         </div>
-         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3">
-               <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
-               <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon">
-               Browlesque Cavite
-               </a>
-            </li>
-            <li class="ms-3">
-               <span class="footer-text-white">
-               <img src="./assets/images/icon/Phone.svg" alt="Phone Icon">
-               09123456789
-               </span>
-            </li>
-         </ul>
-      </footer>
+          </div>
+          <div class="contacts">
+            <ul class="nav d-flex align-items-center justify-content-end">
+              <li class="ms-3">
+                <span class="footer-text-white">
+                  <img src="./assets/images/icon/email.svg" alt="Email Icon"> browlesque@gmail.com
+                </span>
+              </li>
+              <li class="ms-3">
+                <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
+                  <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon"> Browlesque Cavite
+                </a>
+              </li>
+              <li class="ms-3">
+                <span class="footer-text-white">
+                  <img src="./assets/images/icon/Phone.svg" alt="Phone Icon"> 09123456789
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
       <!-- Terms and Service Modal -->
       <div class="modal fade" id="termsAndConditions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="termsAndConditionsLabel" aria-hidden="true">
@@ -236,7 +240,7 @@
       <div id="confirmationModal" data-bs-backdrop="static" class="modal">
          <div class="modal-content-c custom-modal-content d-flex flex-column align-items-center">
             <h1 class="text-center mt-3 mb-0">Are the information details correct?</h1>
-            <h6 class="text-center custom-subtitle mt-2 mb-2">By confirming, this will submit appointment with the information you provided. Please review and make sure that these are correct.</h6>
+            <h6 class="text-center custom-subtitle mt-2 mb-2">By confirming, this will submit the appointment with the information you provided. Please review and ensure that these details are correct.</h6>
                   <div class="d-flex justify-content-end mt-5">
                      <button type="button" id="confirmButton" class="btn btn-primary btn-primary-custom-tc me-2 fs-5 text-center" onclick="submitForm()">Confirm</button>
                      <button type="button" id="editButton" class="btn btn-secondary btn-secondary-custom me-2 fs-5 text-center" onclick="hideConfirmationModal()">Edit</button>

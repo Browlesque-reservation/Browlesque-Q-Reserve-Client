@@ -35,42 +35,50 @@
 </nav>
 
 <div class="container-fluid">
-  <div class="fw-bold mt-2" id="browlesque">BROWLESQUE</div>
-    <div class="parent-comp-abt-us mb-3">
-      <div class="div15">
-        <div class="fw-bold text-start" id="about-us">ABOUT US</div>
-        <div class="description-text description-text-custom">The Hollywood celebrities and star's choices for best Microblading eyebrows, scalp and other micropigmentation procedures.</div>
-      </div>
-      <div class="div16">
-        <img src="./assets/images/pictures/microblading2.jpg" id="about_us_img" alt="About us Image">
+  <div class="container-flex add-white-bg">
+      <div class="container">
+        <div class="people-container">
+            <!-- left position -->
+            <img src="./assets/images/pictures/browlesque.svg" id="browlesque-img" alt="Browlesque Image" class="about-us-img">         
+            <!-- right position -->
+            <div class="about-us-text">  
+              <h1 class="mt-2 abt-center" id="about_label">About Us</h1>
+              <div class="sub-text sub-text-m">The Hollywood celebrities and star's choices for best Microblading eyebrows, scalp and other micropigmentation procedures.<br><br>Take this opportunity to have the brows and natural pinkish youthful lips you have always wanted!</div>
+              <div class="sub-text sub-text-m mt-0 add-bold"><br>Located at 12 Real Street Bacoor, Cavite, Philippines.</div>
+            </div>
+        </div>
       </div>
   </div>
-</div>
 
 
-<div class="container-fluid">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top footer-black">
-    <div class="col-md-4 d-flex align-items-center">
-      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      </a>
-      <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
+    <div class="container-flex add-black-bg">
+      <div class="container">
+        <div class="footer-container d-flex justify-content-between">
+          <div class="contact-us">
+            <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
+          </div>
+          <div class="contacts">
+            <ul class="nav d-flex align-items-center justify-content-end">
+              <li class="ms-3">
+                <span class="footer-text-white">
+                  <img src="./assets/images/icon/email.svg" alt="Email Icon"> browlesque@gmail.com
+                </span>
+              </li>
+              <li class="ms-3">
+                <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
+                  <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon"> Browlesque Cavite
+                </a>
+              </li>
+              <li class="ms-3">
+                <span class="footer-text-white">
+                  <img src="./assets/images/icon/Phone.svg" alt="Phone Icon"> 09123456789
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li class="ms-3">
-        <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
-          <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon" width="24" height="24">
-          Browlesque Cavite
-        </a>
-      </li>
-      <li class="ms-3">
-        <span class="footer-text-white">
-          <img src="./assets/images/icon/Phone.svg" alt="Phone Icon" width="24" height="24">
-          09123456789
-        </span>
-      </li>
-    </ul>
-  </footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
