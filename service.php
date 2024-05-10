@@ -1,3 +1,33 @@
+<?php
+require_once('connect.php');
+
+// Check if service_id is provided in the URL
+if (isset($_GET['service_id'])) {
+    $service_id = $_GET['service_id'];
+    
+    // Fetch service information based on service_id
+    $query = "SELECT service_name, service_description, service_image FROM services WHERE service_id = $service_id";
+    $result = mysqli_query($conn, $query);
+    
+    // Check if service is found
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $service_name = $row['service_name'];
+        $service_description = $row['service_description'];
+        $service_image = $row['service_image'];
+    } else {
+        // Handle case where service is not found
+        $service_name = "Service Not Found";
+        $service_description = "This service does not exist.";
+        $service_image = ""; // You can provide a default image here if needed
+    }
+} else {
+    // Handle case where service_id is not provided
+    $service_name = "Service ID Not Provided";
+    $service_description = "Please select a service to view details.";
+    $service_image = ""; // You can provide a default image here if needed
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -31,27 +61,28 @@
                 </li>
             </ul>
         </div>
+        </div>
     </div>
 </nav>
 
 <div class="container-fluid">
   <div class="container-flex add-white-bg">
-      <div class="container">
-        <div class="people-container">
-            <!-- left position -->
-            <img src="./assets/images/pictures/browlesque.svg" id="browlesque-img" alt="Browlesque Image" class="about-us-img">         
-            <!-- right position -->
-            <div class="about-us-text">  
-              <h1 class="mt-2 abt-center" id="about_label">About Us</h1>
-              <div class="sub-text sub-text-m">The Hollywood celebrities and star's choices for best Microblading eyebrows, scalp and other micropigmentation procedures.<br><br>Take this opportunity to have the brows and natural pinkish youthful lips you have always wanted!</div>
-              <div class="sub-text sub-text-m mt-0 add-bold"><br>Located at 12 Real Street Bacoor, Cavite, Philippines.</div>
+      <div class="head-browlesque text-center"> BROWLESQUE</div>
+        <div class="serv-indiv-container container">
+            <!-- Display service information -->
+            <?php if (!empty($service_image)) : ?>
+                <img class="service-image" src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
+            <?php endif; ?>
+            <div class="serv-text">
+              <div class="sn-indiv"><?php echo $service_name; ?></div>
+              <div class="sd-indiv"><?php echo $service_description; ?></div>
             </div>
         </div>
-      </div>
   </div>
 
+  
 
-    <div class="container-flex add-black-bg">
+  <div class="container-flex add-black-bg">
       <div class="container">
         <div class="footer-container d-flex justify-content-between">
           <div class="contact-us">
@@ -79,8 +110,15 @@
         </div>
       </div>
     </div>
+
+
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="./assets/js/text.js"></script>
+<script src="./assets/js/carousel.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 </html>
