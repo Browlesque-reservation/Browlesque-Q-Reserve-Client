@@ -1,6 +1,15 @@
 <?php
-    session_start();
     require_once('connect.php'); // Include your database connection script
+
+    // Retrieve services from the database
+    $query_services = "SELECT service_id, service_name FROM services";
+    $result_services = mysqli_query($conn, $query_services);
+
+    // Create an associative array to store service IDs and names
+    $services = array();
+    while ($row = mysqli_fetch_assoc($result_services)) {
+        $services[$row['service_id']] = $row['service_name'];
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Retrieve form data
@@ -31,14 +40,22 @@
             $query_details = "INSERT INTO client_details (client_name, client_contactno, no_of_companions, client_notes, appointment_id) 
                               VALUES ('$clientName', '$clientContactNo', '$noOfCompanions', '$clientNotes', '$lastAppointmentID')";
             $result_details = mysqli_query($conn, $query_details);
-
-            $_SESSION['appointment_submitted'] = true;
+            
             if (!$result || !$result_details) {
                 // Handle the error, if any
                 echo "Error: " . mysqli_error($conn);
             }
         }
+
+        header("Location: Index.php");
     } else {
         echo "Form data not submitted!";
     }
 ?>
+
+<!-- Display services -->
+<ul>
+    <?php foreach ($services as $serviceID => $serviceName): ?>
+        <li><?php echo $serviceName; ?> (ID: <?php echo $serviceID; ?>)</li>
+    <?php endforeach; ?>
+</ul>

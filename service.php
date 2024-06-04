@@ -57,7 +57,7 @@ if (isset($_GET['service_id'])) {
                     <a class="nav-link" href="book_appointment1.php">Book Appointment</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about_us.php">About us</a>
+                    <a class="nav-link" href="index.php#about_us_section">About us</a>
                 </li>
             </ul>
         </div>
