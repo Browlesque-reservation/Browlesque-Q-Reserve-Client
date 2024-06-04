@@ -45,7 +45,7 @@ $totalPromos = mysqli_num_rows($result1);
                     <a class="nav-link" href="book_appointment1.php">Book Appointment</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about_us.php">About us</a>
+                    <a class="nav-link" href="#" onclick="scrollToAboutSection()">About us</a>
                 </li>
             </ul>
         </div>
@@ -156,18 +156,18 @@ $totalPromos = mysqli_num_rows($result1);
 
   <div class="container-flex add-white-bg">
     <div class="container">
-      <div class="people-container">
-          <!-- left position -->
-          <img src="./assets/images/pictures/browlesque.svg" id="browlesque-img" alt="Browlesque Image" class="about-us-img">         
-          <!-- right position -->
-          <div class="about-us-text">  
-            <h1 class="mt-2 abt-center" id="about_label">About Us</h1>
-            <div class="sub-text sub-text-m">The Hollywood celebrities and star's choices for best Microblading eyebrows, scalp and other micropigmentation procedures.<br><br>Take this opportunity to have the brows and natural pinkish youthful lips you have always wanted!</div>
-            <div class="sub-text sub-text-m mt-0 add-bold"><br>Located at 12 Real Street Bacoor, Cavite, Philippines.</div>
-          </div>
-      </div>
+        <div class="people-container" id="about_us_section">
+            <!-- left position -->
+            <img src="./assets/images/pictures/browlesque.svg" id="browlesque-img" alt="Browlesque Image" class="about-us-img">
+            <!-- right position -->
+            <div class="about-us-text">
+                <h1 class="mt-2 abt-center" id="about_label">About Us</h1>
+                <div class="sub-text sub-text-m">The Hollywood celebrities and star's choices for best Microblading eyebrows, scalp and other micropigmentation procedures.<br><br>Take this opportunity to have the brows and natural pinkish youthful lips you have always wanted!</div>
+                <div class="sub-text sub-text-m mt-0 add-bold"><br>Located at 12 Real Street Bacoor, Cavite, Philippines.</div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
 
 
   <div class="container-flex add-black-bg">
@@ -211,6 +211,13 @@ $totalPromos = mysqli_num_rows($result1);
     function redirectToServicePage(serviceId) {
         // You can redirect the user to a specific page based on the service ID
         window.location.href = 'service.php?service_id=' + serviceId;
+    }
+
+    function scrollToAboutSection() {
+        // Select the About Us section by its ID
+        var aboutSection = document.getElementById('about_us_section');
+        // Scroll to the About Us section with smooth behavior
+        aboutSection.scrollIntoView({ behavior: 'smooth' });
     }
 </script>
 
