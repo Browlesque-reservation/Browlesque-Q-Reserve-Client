@@ -224,6 +224,30 @@
   color: #2D2D2D;
 }
 
+.sub-text-c {
+  font-size: 1rem;
+  margin-left: 2rem;
+}
+
+.dets{
+  margin-left: 4rem;
+  margin-bottom: 2rem;
+}
+
+.dets-1{
+  margin-top: 3rem;
+  margin-left: 6rem;
+  margin-bottom: 2.5rem;
+}
+
+.dets-2{
+  margin-left: 0;
+  margin-top: 3rem;
+  font-size: 0.8rem;
+  margin-bottom: 5rem;
+  font-weight: 800;
+}
+
 .add-bold{
   font-weight: bold;
 }
@@ -285,9 +309,20 @@
     margin-left: 2rem;
   }
 
+  .sub-text-c {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    text-align: left;
+  }
+
   .see-more {
     margin-right: 2.125rem;
     padding-bottom: 4rem;
+  }
+
+  #title {
+    font-size: 2rem;
   }
 }
 
@@ -821,7 +856,7 @@
 }
 
 .form-check {
-  margin-left: 100px;
+  margin-left: 8.5rem;
 }
 
 .form-check-input{
@@ -871,9 +906,16 @@ color: #ffffff;
 border: 1px solid black;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .fixed-buttons {
     justify-content: center;
+  }
+  .form-check {
+    margin-left: 3rem;
+  }
+
+  .form-check-input-custom{
+    margin-left: 3rem;
   }
 }
 
@@ -1855,5 +1897,58 @@ transform: translate(-50%, -50%);
   
   .sd-indiv{
     font-size: 1.2rem;
+  }
+}
+
+.qrcode-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%; /* Adjust this if necessary */
+}
+
+.confirmation-details{
+  margin-top: 3rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  background-color: #D9D9D9;
+  border: 1px solid #000000;
+}
+
+.back-home{
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-bottom: 4rem;
+  margin-right: 3.5rem;
+  transition: margin-right 0.3s ease-in-out;
+}
+
+.back-home:hover{
+  margin-right: 5rem;
+}
+
+.back-home:active{
+  margin-right: 5rem;
+}
+
+.under-qrcode{
+  transition: transform 0.3s ease-in-out;
+}
+
+.under-qrcode:hover{
+  transform: scale(1.1);
+}
+
+.under-qrcode:active{
+  transform: scale(1.1);
+}
+
+@media (max-width: 1284px) {
+  .confirmation-details{
+    margin-top: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
   }
 }

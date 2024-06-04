@@ -36,7 +36,7 @@
                      <a class="nav-link" href="book_appointment1.php">Book Appointment</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="about_us.php">About us</a>
+                     <a class="nav-link" href="index.php#about_us_section">About us</a>
                   </li>
                </ul>
             </div>
@@ -45,7 +45,7 @@
       <div class="container-fluid">
          <h1 class="fw-bold mt-2" id="title">BOOK YOUR APPOINTMENT</h1>
          <div class="container-md container-md-custom" id="dropdown-container">
-            <form id="appointmentForm" method="POST" action="insert.php" onsubmit="event.preventDefault(); showConfirmationModal();">
+            <form id="appointmentForm" method="POST" action="insert.php" onsubmit="validateForm(event);">
                <span class="label-checkbox mb-2"><span class="asterisk">*</span>Type of Service to be Availed: </span><br>
                <!-- Service checkboxes -->
                <?php
@@ -82,9 +82,10 @@
                   </div>
                </div>
                <!-- Calendar section -->
+               <span id="clientDateError" style="color: red; display: none; padding-left:10%">Please select a date.</span>
                <div id="nameAndNumberContainer" style="display: none;">
                   <div id="calendarContainer" class="calendar-container container-fluid" style="display: none;">
-                     <span class="label-checkbox mb-2"><span class="asterisk">*</span>Set appointment date:</span><br>
+                     <span class="label-checkbox mb-2" id="focus_date"><span class="asterisk">*</span>Set appointment date:</span><br>
                      <div class="calendar mb-3">
                         <div class="calendar-header">
                            <span class="month-picker" id="month-picker">May</span>
@@ -124,6 +125,7 @@
                   <input type="hidden" name="client_date" id="client_date">
                   <!-- time buttons section -->
                   <div id="timeButtonsContainer" style="display: none;">
+                  <span id="clientTimeError" style="color: red; display: none; padding-left:10%">Please select a time.</span>
                      <span class="label-checkbox mb-2"><span class="asterisk">*</span>Set appointment time:</span><br>
                      <div class="btn-grid-container">
                         <div class="parent mb-3">
@@ -144,16 +146,17 @@
                   <input type="hidden" name="end_time" id="end_time">
                   <!-- <input type="hidden" name="client_time" id="client_time"> -->
                   <div class="container-fluid">
-                     <div class="mb-3">
+                     <div class="mb-3" id="clientNameDiv">
                         <label for="client_name" class="label-checkbox mb-2"><span class="asterisk">*</span>Name:</label>
-                        <input type="text" class="form-control" id="client_name" name="client_name" required>
+                        <input type="text" class="form-control" id="client_name" name="client_name">
+                        <span id="clientNameError" style="color: red; display: none; padding-left:10%">This field is required. Please input your name.</span>
                      </div>
-                     <div class="mb-3">
+                     <div class="mb-3" id="clientNumberDiv">
                         <label for="client_contactno" class="label-checkbox mb-2"><span class="asterisk">*</span>Enter your phone number:</label>
-                        <input type="tel" class="form-control" id="client_contactno" name="client_contactno"
-                           pattern="09[0-9]{9}" title="Please enter a valid contact number." placeholder="" required
-                           oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 11);">
+                        <input type="tel" class="form-control" id="client_contactno" name="client_contactno" value="09">
+                        <span id="clientContactError" style="color: red; display: none; padding-left:10%">This field is required. Please input your contact number.</span>
                      </div>
+                     <span id="clientCompanionError" style="color: red; display: none; padding-left:10%">Please select number of companion/s.</span>
                      <div class="mb-3 d-flex justify-content-center">
                         <div class="btn-grid-container">
                            <label for="no_of_companions" class="label-checkbox mb-2 me-4 text-center"><span class="asterisk text-center">*</span>No. of Companions:</label>
@@ -167,12 +170,13 @@
                      </div>
                      <input type="hidden" name="no_of_companions" id="no_of_companions">
                      <div class="mb-3">
-                        <label for="client_notes" class="label-checkbox mb-2">Notes:</label>
+                        <label for="client_notes" class="label-checkbox mb-2">Notes (optional):</label>
                         <textarea class="form-control tall-input" id="client_notes" name="client_notes"></textarea>
-                     </div>
+                     </div>     
                      <div class="container mt-5">
+                     <span id="clientTermsError" style="display: none; color: red; padding-left:10%">Please accept the terms and conditions to continue with the booking.</span>
                         <div class="mb-3 checkbox-container">
-                           <input type="checkbox" class="form-check-input form-check-input-custom" id="terms_conditions" name="terms_conditions" value="Agree" required>
+                           <input type="checkbox" class="form-check-input form-check-input-custom" id="terms_conditions" name="terms_conditions" value="Agree">
                            <label for="terms_conditions" class="label-checkbox-custom mb-2 click-effect"><span class="asterisk">*</span>Terms and Conditions</label>
                         </div>
                         <!-- Button trigger modal -->
@@ -244,11 +248,135 @@
                   <div class="d-flex justify-content-end mt-5">
                      <button type="button" id="confirmButton" class="btn btn-primary btn-primary-custom-tc me-2 fs-5 text-center" onclick="submitForm()">Confirm</button>
                      <button type="button" id="editButton" class="btn btn-secondary btn-secondary-custom me-2 fs-5 text-center" onclick="hideConfirmationModal()">Edit</button>
-                  </div>
+             </div>
          </div>
       </div>
 
       <script>
+
+         document.getElementById("client_name").addEventListener("keypress", function(event) {
+            var charCode = event.charCode;
+            // Allow letters, whitespace, hyphens, and period
+            if (!(charCode >= 65 && charCode <= 90) && // Uppercase letters
+               !(charCode >= 97 && charCode <= 122) && // Lowercase letters
+               !(charCode === 32) && // Whitespace
+               !(charCode === 45) && // Hyphen
+               !(charCode === 46)) { // Period
+               event.preventDefault();
+            }
+         });
+         document.getElementById('client_contactno').addEventListener('input', function(event) {
+         let input = event.target.value;
+
+         if (!input.startsWith('09')) {
+            event.target.value = '09'; 
+         } else {
+            let numbersAfterPrefix = input.replace('09', ''); 
+            let numbersOnly = /^\d*$/; 
+
+            if (!numbersAfterPrefix.match(numbersOnly) || numbersAfterPrefix.length > 9) {
+        event.target.value = '09' + numbersAfterPrefix.slice(0, 9);
+    }
+         }
+      });
+      function validateForm(event) {
+    event.preventDefault(); // Prevent form submission by default
+
+    var clientName = document.getElementById('client_name');
+    var clientContact = document.getElementById('client_contactno');
+    var clientDate = document.getElementById('client_date');
+    var clientTime = document.getElementById('start_time');
+    var clientCompanion = document.getElementById('no_of_companions');
+    var clientNameError = document.getElementById('clientNameError');
+    var clientContactError = document.getElementById('clientContactError');
+    var clientDateError = document.getElementById('clientDateError');
+    var clientTimeError = document.getElementById('clientTimeError');
+    var clientCompanionError = document.getElementById('clientCompanionError');
+    var termsCheckbox = document.getElementById('terms_conditions');
+
+    // Check if client date is empty
+    if (clientDate.value.trim() === '') {
+        clientDateError.style.display = 'block';
+        clientDateError.scrollIntoView();
+        return false;
+    } else {
+        clientDateError.style.display = 'none';
+    }
+
+    // Check if client time is empty
+    if (clientTime.value.trim() === '') {
+        clientTimeError.style.display = 'block';
+        clientTimeError.scrollIntoView();
+        return false;
+    } else {
+        clientTimeError.style.display = 'none';
+    }
+
+    // Check if client name is empty
+    if (clientName.value.trim() === '') {
+        clientNameError.style.display = 'block';
+        clientNameError.scrollIntoView();
+        clientName.focus();
+        return false;
+    } else {
+        clientNameError.style.display = 'none';
+    }
+
+    // Check if client contact number is only the pre-added value
+    if (clientContact.value.trim() === '09') {
+        clientContactError.style.display = 'block';
+        clientContactError.scrollIntoView();
+        clientContact.focus();
+        return false;
+    } else {
+        clientContactError.style.display = 'none';
+    }
+
+    // Check if client companion value is empty
+    if (clientCompanion.value.trim() === '') {
+        clientCompanionError.style.display = 'block';
+        clientCompanionError.scrollIntoView();
+        return false;
+    } else {
+        clientCompanionError.style.display = 'none';
+    }
+
+    // Check if terms and conditions checkbox is checked
+    if (!termsCheckbox.checked) {
+        document.getElementById('clientTermsError').style.display = 'block';
+        document.getElementById('clientTermsError').scrollIntoView();
+        return false;
+    } else {
+        document.getElementById('clientTermsError').style.display = 'none';
+    }
+
+    // If all inputs have values, show the modal
+    showConfirmationModal();
+
+    return false; // Prevent form submission
+}
+// Listen for input events on the client name and contact fields
+document.getElementById('client_name').addEventListener('input', function() {
+    var clientNameError = document.getElementById('clientNameError');
+    clientNameError.style.display = 'none';
+});
+
+document.getElementById('client_contactno').addEventListener('input', function() {
+    var clientContactError = document.getElementById('clientContactError');
+    clientContactError.style.display = 'none';
+});
+
+document.getElementById('client_date').addEventListener('input', function() {
+    var clientDateError = document.getElementById('clientDateError');
+    clientDateError.style.display = 'none';
+});
+
+document.getElementById('start_time').addEventListener('input', function() {
+    var clientTimeError = document.getElementById('clientTimeError');
+    clientTimeError.style.display = 'none';
+});
+
+         
          document.addEventListener('DOMContentLoaded', function() {
              var checkboxes = document.querySelectorAll('input[type="checkbox"]');
          var nextButton = document.getElementById('nextButton');
