@@ -10,12 +10,10 @@ function submitForm() {
         processData: false,
         contentType: false,
         success: function(response) {
-            // Show the success modal
-            // showSuccessModal();
-            // Hide the confirmation modal
-            // hideConfirmationModal();
-            window.location.href = "Index.php";
-            console.log("Confirmation modal hidden");
+            // Assuming insert.php returns the appointment_id
+            var appointment_id = response.appointment_id;
+            // Redirect to confirmation-qr.php with appointment_id parameter
+            window.location.href = "confirmation-qr.php?";
         },
         error: function(xhr, status, error) {
             // Handle errors here
@@ -23,6 +21,7 @@ function submitForm() {
         }
     });
 }
+
 
 function showConfirmationModalDelete() {
     var checkboxes = document.querySelectorAll('.delete-checkbox:checked');
