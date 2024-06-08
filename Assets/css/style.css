@@ -1293,10 +1293,11 @@ border: 1px solid black;
 }
 
 .clicked-date {
-  background-color: #f6ff54;
+  background-color: #313131;
   border-radius: 8px;
   font-weight: 700;
-  border: 1px solid #737815;
+  border: 1px solid #111111;
+  color: #ffffff;
 }
 
 /* Default styling for day labels */
@@ -1390,12 +1391,12 @@ border: 1px solid black;
 } */
 
 .btn.time-buttons.highlight {
-  background-color: #f6ff54;
+  background-color: #ffffff;
   color: #313131;
 }
 
 .btn.companion-btn.highlight {
-  background-color: #f6ff54;
+  background-color: #ffffff;
   color: #313131;
 }
 
