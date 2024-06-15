@@ -17,6 +17,7 @@
       <link rel="icon" href="./assets/images/icon/Browlesque-Icon.svg" type="image/png">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
       <link rel="stylesheet" href="./assets/css/style.css">
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
    </head>
    <body>
       <nav class="navbar navbar-expand-lg navbar-custom container-fluid">
@@ -153,7 +154,7 @@
                      </div>
                      <div class="mb-3" id="clientNumberDiv">
                         <label for="client_contactno" class="label-checkbox mb-2"><span class="asterisk">*</span>Enter your phone number:</label>
-                        <input type="tel" class="form-control" id="client_contactno" name="client_contactno" value="09">
+                        <input type="tel" class="form-control" id="client_contactno" name="client_contactno" value="09" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 11);">
                         <span id="clientContactError" style="color: red; display: none; padding-left:10%">This field is required. Please input your contact number.</span>
                      </div>
                      <span id="clientCompanionError" style="color: red; display: none; padding-left:10%">Please select number of companion/s.</span>
@@ -169,10 +170,10 @@
                         </div>
                      </div>
                      <input type="hidden" name="no_of_companions" id="no_of_companions">
-                     <div class="mb-3">
+                    <div class="mb-3">
                         <label for="client_notes" class="label-checkbox mb-2">Notes (optional):</label>
-                        <textarea class="form-control tall-input" id="client_notes" name="client_notes"></textarea>
-                     </div>     
+                        <textarea class="form-control tall-input" id="client_notes" name="client_notes" maxlength="250"></textarea>
+                    </div>
                      <div class="container mt-5">
                      <span id="clientTermsError" style="display: none; color: red; padding-left:10%">Please accept the terms and conditions to continue with the booking.</span>
                         <div class="mb-3 checkbox-container">
@@ -222,23 +223,23 @@
     </div>
 
       <!-- Terms and Service Modal -->
-      <div class="modal fade" id="termsAndConditions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="termsAndConditionsLabel" aria-hidden="true">
-         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-               <div class="modal-header text-center">
-                  <h1 class="modal-title fs-5 mx-auto" id="termsAndConditionsLabel">Terms and Conditions</h1>
-               </div>
-               <div class="modal-body">
-                  By accessing and using the reservation system provided by [Your Company Name], you agree to be bound by the following terms and conditions.
-                  When making a reservation, you are required to provide accurate information, and payment in full is necessary to confirm the booking. Cancellations may incur fees, and refunds, if applicable, will be subject to our refund policy. Modifications to reservations are dependent on availability and may incur additional charges. While using our Services, you agree to conduct yourself lawfully and responsibly. We are not liable for any loss or damage to personal belongings. Our liability is limited to the extent permitted by law, and you agree to indemnify us against any claims arising from your use of the Services. Intellectual property rights in the reservation system belong to [Your Company Name]. These terms are governed by the laws of [Your Country], and we reserve the right to amend them at any time. If any provision is deemed unenforceable, the remaining terms shall remain in effect. By using our reservation system, you signify your acceptance of these terms and conditions.
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary btn-primary-custom-tc" id="acceptBtn">Accept</button>
-                  <button type="button" class="btn btn-secondary btn-secondary-custom" id="declineBtn" data-bs-dismiss="modal">Decline</button>
-               </div>
+<div class="modal fade blur-backdrop" id="termsAndConditions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="termsAndConditionsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h1 class="modal-title fs-5 mx-auto" id="termsAndConditionsLabel">Terms and Conditions</h1>
             </div>
-         </div>
-      </div>
+            <div class="modal-body">
+                By accessing and using the reservation system provided by Browlesque, you agree to be bound by the following terms and conditions. When making a reservation, you are required to provide accurate information. Modifications to reservations are dependent on availability and may incur additional charges. While using our services, you agree to conduct yourself lawfully and responsibly. We are not liable for any loss or damage to personal belongings. Our liability is limited to the extent permitted by law, and you agree to indemnify us against any claims arising from your use of the services. Intellectual property rights in the reservation system belong to Browlesque. These terms are governed by the laws of the Republic of the Philippines, and we reserve the right to amend them at any time. If any provision is deemed unenforceable, the remaining terms shall remain in effect. By using our reservation system, you signify your acceptance of these terms and conditions.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-primary-custom-tc" id="acceptBtn">Accept</button>
+                <button type="button" class="btn btn-secondary btn-secondary-custom" id="declineBtn" data-bs-dismiss="modal">Decline</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
       <div id="confirmationModal" data-bs-backdrop="static" class="modal">
@@ -253,6 +254,26 @@
       </div>
 
       <script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const modalElement = document.getElementById('termsAndConditions');
+
+    modalElement.addEventListener('shown.bs.modal', () => {
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.style.backdropFilter = 'blur(10px)';
+            backdrop.style.webkitBackdropFilter = 'blur(10px)'; // For Safari
+        }
+    });
+
+    modalElement.addEventListener('hidden.bs.modal', () => {
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.style.backdropFilter = '';
+            backdrop.style.webkitBackdropFilter = ''; // For Safari
+        }
+    });
+});
+
 
          document.getElementById("client_name").addEventListener("keypress", function(event) {
             var charCode = event.charCode;

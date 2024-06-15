@@ -1,6 +1,3 @@
-
-
-
 //calendar source code js
 
 const isLeapYear = (year) => {
@@ -102,17 +99,141 @@ const isLeapYear = (year) => {
       
   };
   
-  
+  //-----------------------------------------
+  let clientDate = ""; // Initialize clientDate variable globally
+
   function saveDate(date) {
-    // Format the date as YYYY-MM-DD
-    const formattedDate = date.getFullYear() + '-' + 
-                          ('0' + (date.getMonth() + 1)).slice(-2) + '-' + 
-                          ('0' + date.getDate()).slice(-2);
-    
-    // Set the value of the hidden input field to the formatted date
-    document.getElementById('client_date').value = formattedDate;
-    console.log("Clicked date:", formattedDate);
+      // Format the date as YYYY-MM-DD
+      const formattedDate = date.getFullYear() + '-' + 
+                            ('0' + (date.getMonth() + 1)).slice(-2) + '-' + 
+                            ('0' + date.getDate()).slice(-2);
+      
+      // Set the value of the hidden input field to the formatted date
+      document.getElementById('client_date').value = formattedDate;
+      console.log("Clicked date:", formattedDate);
+  
+      // Update clientDate variable
+      clientDate = formattedDate;
+  
+      // Reset the state of time buttons
+      resetTimeButtonsState();
+  
+      // Fetch appointments for the selected date
+      fetchAppointmentsForDate(formattedDate);
   }
+  
+  function resetTimeButtonsState() {
+      console.log("Resetting time buttons state...");
+      const timeButtons = document.querySelectorAll('.time-buttons');
+      timeButtons.forEach(button => {
+          button.disabled = true; // Disable all time buttons initially
+      });
+  }
+  
+  function fetchAppointmentsForDate(date) {
+      console.log("Fetching appointments for date:", date);
+  
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'fetch_appointments.php', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+          console.log("XHR Ready State:", xhr.readyState);
+          if (xhr.readyState === 4) {
+              console.log("XHR Status:", xhr.status);
+              if (xhr.status === 200) {
+                  try {
+                      const response = JSON.parse(xhr.responseText);
+                      console.log("Response:", response);
+                      disableBookedTimeButtons(date, response);
+                  } catch (error) {
+                      console.error("Error parsing JSON response: ", error);
+                      console.log("Response text: ", xhr.responseText);
+                  }
+              } else {
+                  console.error("Error fetching appointments: ", xhr.statusText);
+              }
+          }
+      };
+      // Ensure the date is properly sent in the request body
+      const params = 'date=' + encodeURIComponent(date);
+      console.log("Request params:", params);
+      xhr.send(params);
+  }
+  
+  function convertTo24HourClock(time) {
+      const [timePart, meridiem] = time.split(' ');
+      let [hours, minutes] = timePart.split(':').map(part => parseInt(part, 10));
+  
+      if (meridiem === 'PM' && hours < 12) {
+          hours += 12;
+      } else if (meridiem === 'AM' && hours === 12) {
+          hours = 0;
+      }
+  
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
+  
+  function disableBookedTimeButtons(clientDate, appointments) {
+    console.log("Disabling time buttons based on existing appointments...");
+
+    // Get current date and time
+    const currentDate = new Date();
+    const currentDateString = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+    const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // Current time in minutes since midnight
+
+    // Get all time buttons
+    const timeButtons = document.querySelectorAll('.time-buttons');
+
+    // Enable or disable time buttons based on existing appointments and current time
+    timeButtons.forEach(button => {
+        const [buttonStart, buttonEnd] = button.value.split('-').map(time => time.trim());
+        const buttonStartTime = convertTo24HourClock(buttonStart) + ':00';
+        const buttonEndTime = convertTo24HourClock(buttonEnd) + ':00';
+
+        // Convert button times to comparable format
+        const [startHours, startMinutes] = buttonStart.split(':').map(part => parseInt(part, 10));
+        const buttonTimeInMinutes = startHours * 60 + startMinutes;
+
+        // Check if the button is for today and if the time has passed
+        const isToday = clientDate === currentDateString;
+        const isTimePassed = isToday && (currentTime > buttonTimeInMinutes);
+
+        // Check if any appointment exactly matches the time slot
+        const isBooked = appointments.some(appointment => {
+            const appointmentStartTime = appointment.start_time.split(' ')[0];
+            const appointmentEndTime = appointment.end_time.split(' ')[0];
+
+            return buttonStartTime === appointmentStartTime && buttonEndTime === appointmentEndTime;
+        });
+
+        if (isBooked || isTimePassed) {
+            button.disabled = true;
+            console.log(`Time button (${button.value}) disabled for Client Date: ${clientDate}.`);
+        } else {
+            button.disabled = false;
+            console.log(`Time button (${button.value}) enabled for Client Date: ${clientDate}.`);
+        }
+    });
+}
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+      resetTimeButtonsState(); // Reset time buttons state on page load
+  
+      const clientDateInput = document.getElementById('client_date');
+  
+      clientDateInput.addEventListener('change', function() {
+          clientDate = this.value;
+          fetchAppointmentsForDate(clientDate);
+      });
+  
+      if (clientDate) {
+          fetchAppointmentsForDate(clientDate);
+      }
+  });
+  
+  
+//--------------------------------------------------------------------------------  
   
   const currentMonthValue = new Date().getMonth();
   const currentYearValue = new Date().getFullYear();
