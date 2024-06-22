@@ -5,8 +5,8 @@ require_once('connect.php');
 if (isset($_GET['service_id'])) {
     $service_id = $_GET['service_id'];
     
-    // Fetch service information based on service_id
-    $query = "SELECT service_name, service_description, service_image FROM services WHERE service_id = $service_id";
+    // Fetch service information based on service_id and service_status
+    $query = "SELECT service_name, service_description, service_image FROM services WHERE service_id = $service_id AND service_state = 'Activated'";
     $result = mysqli_query($conn, $query);
     
     // Check if service is found
@@ -16,16 +16,14 @@ if (isset($_GET['service_id'])) {
         $service_description = $row['service_description'];
         $service_image = $row['service_image'];
     } else {
-        // Handle case where service is not found
-        $service_name = "Service Not Found";
-        $service_description = "This service does not exist.";
+        // Handle case where service is not found or not activated
+        $service_name = "Service Not Found or Not Available";
+        $service_description = "This service does not exist or is not currently available.";
         $service_image = ""; // You can provide a default image here if needed
     }
 } else {
-    // Handle case where service_id is not provided
-    $service_name = "Service ID Not Provided";
-    $service_description = "Please select a service to view details.";
-    $service_image = ""; // You can provide a default image here if needed
+  header("Location: index.php");
+  exit();
 }
 ?>
 <!doctype html>
@@ -80,8 +78,6 @@ if (isset($_GET['service_id'])) {
         </div>
   </div>
 
-  
-
   <div class="container-flex add-black-bg">
       <div class="container">
         <div class="footer-container d-flex justify-content-between">
@@ -111,9 +107,7 @@ if (isset($_GET['service_id'])) {
       </div>
     </div>
 
-
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="./assets/js/text.js"></script>

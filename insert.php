@@ -24,21 +24,33 @@
                       VALUES ('$serviceIDs', '$promoIDs', '$clientDate', '$startTime', '$endTime', '$termsConditions', 'Pending')";
             $result = mysqli_query($conn, $query);
             
-            // Get the last inserted appointment ID
-            $lastAppointmentID = mysqli_insert_id($conn);
-
-            // Prepare and execute SQL INSERT statement for client_details
-            $query_details = "INSERT INTO client_details (client_name, client_contactno, no_of_companions, client_notes, appointment_id) 
-                              VALUES ('$clientName', '$clientContactNo', '$noOfCompanions', '$clientNotes', '$lastAppointmentID')";
-            $result_details = mysqli_query($conn, $query_details);
-
-            $_SESSION['appointment_submitted'] = true;
-            if (!$result || !$result_details) {
-                // Handle the error, if any
-                echo "Error: " . mysqli_error($conn);
+            if ($result) {
+                // Get the last inserted appointment ID
+                $lastAppointmentID = mysqli_insert_id($conn);
+    
+                // Prepare and execute SQL INSERT statement for client_details
+                $query_details = "INSERT INTO client_details (client_name, client_contactno, no_of_companions, client_notes, appointment_id) 
+                                  VALUES ('$clientName', '$clientContactNo', '$noOfCompanions', '$clientNotes', '$lastAppointmentID')";
+                $result_details = mysqli_query($conn, $query_details);
+    
+                if ($result_details) {
+                    // Return the appointment_id as JSON
+                    echo json_encode(['appointment_id' => $lastAppointmentID]);
+    
+                    // Set the session variable to indicate that the appointment has been submitted
+                    $_SESSION['appointment_submitted'] = true;
+                } else {
+                    // Handle error in client_details insertion
+                    echo json_encode(['error' => 'Error inserting client details: ' . mysqli_error($conn)]);
+                }
+            } else {
+                // Handle error in client_appointment insertion
+                echo json_encode(['error' => 'Error inserting appointment: ' . mysqli_error($conn)]);
             }
+        } else {
+            echo json_encode(['error' => 'Service ID and Promo ID are required!']);
         }
     } else {
-        echo "Form data not submitted!";
+        echo json_encode(['error' => 'Invalid request method!']);
     }
 ?>

@@ -2,12 +2,22 @@
    // define('INCLUDED', true);
    require_once('connect.php');
    
-   $query = "SELECT service_id, service_name, service_description, service_image FROM services";
+   $query = "SELECT service_id, service_name, service_description, service_image FROM services WHERE service_state = 'Activated'";
    $result = mysqli_query($conn, $query);
    
-   $query1 = "SELECT promo_id, promo_details, promo_image FROM promo";
+   $query1 = "SELECT promo_id, promo_details, promo_image FROM promo WHERE promo_state = 'Activated'";
    $result1 = mysqli_query($conn, $query1);
-   ?>
+   
+   // Check if both queries returned empty results
+   if (mysqli_num_rows($result) == 0 && mysqli_num_rows($result1) == 0) {
+       header("Location: index.php"); // Redirect to index.php
+       exit(); // Stop further execution
+   }
+
+   // Variable to track if either section has content
+   $servicesNotEmpty = mysqli_num_rows($result) > 0;
+   $promosNotEmpty = mysqli_num_rows($result1) > 0;
+?>
 <!doctype html>
 <html lang="en">
    <head>
@@ -25,13 +35,13 @@
             <a href="http://localhost/browlesque">
             <img src="./assets/images/icon/Browlesque.svg" class="logo-browlesque-client" alt="Browlesque Logo">
             </a>
-            <a class="navbar-toggler" href="Index.php" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-toggler" href="index.php" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </a>
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                <ul class="navbar-nav">
                   <li class="nav-item">
-                     <a class="nav-link" href="Index.php">Home</a>
+                     <a class="nav-link" href="index.php">Home</a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link" href="book_appointment1.php">Book Appointment</a>
@@ -47,36 +57,45 @@
          <h1 class="fw-bold mt-2" id="title">BOOK YOUR APPOINTMENT</h1>
          <div class="container-md container-md-custom" id="dropdown-container">
             <form id="appointmentForm" method="POST" action="insert.php" onsubmit="validateForm(event);">
-               <span class="label-checkbox mb-2"><span class="asterisk">*</span>Type of Service to be Availed: </span><br>
-               <!-- Service checkboxes -->
-               <?php
-                  // Loop through services and display checkboxes
-                  while ($row = mysqli_fetch_assoc($result)) {
-                     $service_id = $row['service_id'];
-                     $service_name = $row['service_name'];
-                     $isDisabled = true;
-                     echo '<div class="form-check">';
-                     echo '<input class="form-check-input service-checkbox" type="checkbox" name="service_id[]" value="' . $service_id . '" id="Service_' . $service_id . '" data-disable="' . ($isDisabled ? 'true' : 'false') . '">';
-                     echo '<label class="form-check-label" for="Service_' . $service_id . '">' . $service_name . '</label>';
-                     echo '</div>';
-                  }
-               ?>
-               <input type="hidden" name="service_id[]" id="service_id">
-               <span class="label-checkbox mb-2"><span class="asterisk">*</span>Type of Promo to be Availed:</span><br>
-                  <!-- Promo checkboxes -->
-                  <?php
-                     // Loop through promos and display checkboxes
-                     while ($row1 = mysqli_fetch_assoc($result1)) {
-                        $promo_id = $row1['promo_id'];
-                        $promo_details = $row1['promo_details'];
-                        $isDisabled = true;
-                        echo '<div class="form-check">';
-                        echo '<input class="form-check-input promo-checkbox" type="checkbox" name="promo_id[]" value="' . $promo_id . '" id="Promo_' . $promo_id . '" data-disable="' . ($isDisabled ? 'true' : 'false') . '">';
-                        echo '<label class="form-check-label" for="Promo_' . $promo_id . '">' . $promo_details . '</label>';
-                        echo '</div>';
-                     }
-                  ?>
-               <input type="hidden" name="promo_id[]" id="promo_id">
+                    <?php
+                    // Check if services are not empty
+                    if (mysqli_num_rows($result) > 0) {
+                        echo '<span class="label-checkbox mb-2"><span class="asterisk">*</span>Type of Service to be Availed:</span><br>';
+                        // Loop through services and display checkboxes
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $service_id = $row['service_id'];
+                            $service_name = $row['service_name'];
+                            $isDisabled = true;
+                            echo '<div class="form-check">';
+                            echo '<input class="form-check-input service-checkbox" type="checkbox" name="service_id[]" value="' . $service_id . '" id="Service_' . $service_id . '" data-disable="' . ($isDisabled ? 'true' : 'false') . '">';
+                            echo '<label class="form-check-label" for="Service_' . $service_id . '">' . $service_name . '</label>';
+                            echo '</div>';
+                        }
+                        echo '<input type="hidden" name="service_id[]" id="service_id">';
+                    }
+                    else{
+                        echo '<div class="top-margin"></div>';
+                    }
+
+                    // Check if promos are not empty
+                    if (mysqli_num_rows($result1) > 0) {
+                        echo '<span class="label-checkbox mb-2"><span class="asterisk">*</span>Type of Promo to be Availed:</span><br>';
+                        // Loop through promos and display checkboxes
+                        while ($row1 = mysqli_fetch_assoc($result1)) {
+                            $promo_id = $row1['promo_id'];
+                            $promo_details = $row1['promo_details'];
+                            $isDisabled = true;
+                            echo '<div class="form-check">';
+                            echo '<input class="form-check-input promo-checkbox" type="checkbox" name="promo_id[]" value="' . $promo_id . '" id="Promo_' . $promo_id . '" data-disable="' . ($isDisabled ? 'true' : 'false') . '">';
+                            echo '<label class="form-check-label" for="Promo_' . $promo_id . '">' . $promo_details . '</label>';
+                            echo '</div>';
+                        }
+                        echo '<input type="hidden" name="promo_id[]" id="promo_id">';
+                    }
+                    else{
+                        echo '<div class="bot-margin"></div>';
+                    }
+                    ?>
                <div class="mt-2 mb-4">
                   <div class="d-flex justify-content-end fixed-buttons me-4">
                      <button type="button" id="nextButton" class="btn custom-next me-2 fs-5 text-center" disabled data-bs-toggle="tooltip" data-bs-placement="top" title="Please check at least one service or promo first">Next</button>
