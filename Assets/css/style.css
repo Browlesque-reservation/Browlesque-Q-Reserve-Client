@@ -5,7 +5,7 @@
 
   html, body {
     height: 100%;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montseratt', sans-serif;
 }
 
 
@@ -232,6 +232,7 @@
 .dets{
   margin-left: 4rem;
   margin-bottom: 2rem;
+  margin-right: 4rem;
 }
 
 .dets-1{
@@ -1956,4 +1957,38 @@ transform: translate(-50%, -50%);
     margin-left: 2rem;
     margin-right: 2rem;
   }
+}
+
+.no-services-message {
+  text-align: center;
+  color: #313131; /* Red color for the text */
+  font-size: 1.5rem; /* Font size */
+  margin-top: 2rem; /* Space above the message */
+  padding: 1rem; /* Padding around the text */
+  background-color: #ffffff; /* Light red background */
+  border: 3px solid #111111; /* Border matching the background */
+  border-radius: 1rem; /* Rounded corners */
+}
+
+@media screen and (max-width: 768px) {
+  .no-services-message {
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+}
+
+.no-services-message-container {
+  min-height: 200px; /* Adjust height as needed */
+  display: flex;
+  margin-left: 4rem;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.top-margin{
+  margin-top: 4rem;
+}
+
+.bot-margin{
+  margin-top: 4.5rem;
 }

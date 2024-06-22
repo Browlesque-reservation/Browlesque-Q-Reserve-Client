@@ -2,7 +2,7 @@
    // define('INCLUDED', true);
    require_once('connect.php');
 
-   $query = "SELECT promo_id, promo_details, promo_image FROM promo";
+   $query = "SELECT promo_id, promo_details, promo_image FROM promo WHERE promo_state = 'Activated'";
    $result = mysqli_query($conn, $query);
 
    if (!$result) {
