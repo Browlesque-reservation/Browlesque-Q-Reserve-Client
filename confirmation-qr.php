@@ -1,3 +1,66 @@
+<?php
+session_start();
+
+// Check if the appointment submission session variable is set
+if (!isset($_SESSION['appointment_submitted']) || $_SESSION['appointment_submitted'] !== true) {
+    // If not set, redirect to the booking page
+    header('Location: index.php');
+    exit();
+}
+
+require_once('connect.php'); // Include your database connection script
+
+// Get appointment_id from the URL
+if (isset($_GET['appointment_id'])) {
+    $appointmentId = intval($_GET['appointment_id']); // Ensure it's an integer to prevent SQL injection
+
+    // Fetch appointment details from the database
+    $query = "SELECT * FROM client_appointment WHERE appointment_id = $appointmentId";
+    $result = mysqli_query($conn, $query);
+    $appointment = mysqli_fetch_assoc($result);
+
+    // Check if appointment exists
+    if ($appointment) {
+        // Fetch client details associated with the appointment
+        $query_details = "SELECT * FROM client_details WHERE appointment_id = $appointmentId";
+        $result_details = mysqli_query($conn, $query_details);
+        $clientDetails = mysqli_fetch_assoc($result_details);
+
+        // Fetch service names based on service IDs
+        $serviceIds = json_decode($appointment['service_id'], true); // Decode JSON string into array
+        $serviceNames = array();
+        if (!empty($serviceIds)) {
+            foreach ($serviceIds as $serviceId) {
+                $query_service = "SELECT service_name FROM services WHERE service_id = $serviceId";
+                $result_service = mysqli_query($conn, $query_service);
+                $service = mysqli_fetch_assoc($result_service);
+                if ($service) {
+                    $serviceNames[] = $service['service_name'];
+                }
+            }
+        }
+
+        // Fetch promo details based on promo IDs
+        $promoIds = json_decode($appointment['promo_id'], true); // Decode JSON string into array
+        $promoNames = array();
+        if (!empty($promoIds)) {
+            foreach ($promoIds as $promoId) {
+                $query_promo = "SELECT promo_details FROM promo WHERE promo_id = $promoId";
+                $result_promo = mysqli_query($conn, $query_promo);
+                $promo = mysqli_fetch_assoc($result_promo);
+                if ($promo) {
+                    $promoNames[] = $promo['promo_details'];
+                }
+            }
+        }
+
+        $formattedDate = date('F j, Y', strtotime($appointment['client_date']));
+        $formattedStartTime = date('h:i A', strtotime($appointment['start_time']));
+        $formattedEndTime = date('h:i A', strtotime($appointment['end_time']));
+
+        // Now, you have both appointment and client details, as well as service names, you can inject them into HTML
+        ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,19 +78,19 @@
         <a href="http://localhost/browlesque">
             <img src="./assets/images/icon/Browlesque.svg" class="logo-browlesque-client" alt="Browlesque Logo">
         </a>
-        <a class="navbar-toggler" href="Index.php" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-toggler" href="index.php" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link back-button" href="Index.php">Home</a>
+                    <a class="nav-link back-button" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link back-button" href="book_appointment1.php">Book Appointment</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="index.php#about_us_section">About us</a>
+                  <a class="nav-link back-button" href="index.php#about_us_section">About us</a>
                 </li>
             </ul>
         </div>
@@ -41,55 +104,6 @@
         <div class="container-md container-md-custom">
             <div class="confirmation-details"> 
                 <div class="sub-text sub-text-c">Summary</div>
-                <?php
-                    require_once('connect.php'); // Include your database connection script
-
-                    // Fetch appointment details from the database
-                    $query = "SELECT * FROM client_appointment ORDER BY appointment_id DESC LIMIT 1";
-                    $result = mysqli_query($conn, $query);
-                    $appointment = mysqli_fetch_assoc($result);
-
-                    // Check if appointment exists
-                    if ($appointment) {
-                        // Fetch client details associated with the appointment
-                        $appointmentId = $appointment['appointment_id'];
-                        $query_details = "SELECT * FROM client_details WHERE appointment_id = $appointmentId";
-                        $result_details = mysqli_query($conn, $query_details);
-                        $clientDetails = mysqli_fetch_assoc($result_details);
-
-                        // Fetch service names based on service IDs
-                        $serviceIds = json_decode($appointment['service_id'], true); // Decode JSON string into array
-                        $serviceNames = array();
-                        if (!empty($serviceIds)) {
-                            foreach ($serviceIds as $serviceId) {
-                                $query_service = "SELECT service_name FROM services WHERE service_id = $serviceId";
-                                $result_service = mysqli_query($conn, $query_service);
-                                $service = mysqli_fetch_assoc($result_service);
-                                if ($service) {
-                                    $serviceNames[] = $service['service_name'];
-                                }
-                            }
-                        }
-                        
-                        $promoIds = json_decode($appointment['promo_id'], true); // Decode JSON string into array
-                        $promoNames = array();
-                        if (!empty($promoIds)) {
-                            foreach ($promoIds as $promoId) {
-                                $query_promo = "SELECT promo_details FROM promo WHERE promo_id = $promoId";
-                                $result_promo = mysqli_query($conn, $query_promo);
-                                $promo = mysqli_fetch_assoc($result_promo);
-                                if ($promo) {
-                                    $promoNames[] = $promo['promo_details'];
-                                }
-                            }
-                        }                        
-
-                        $formattedDate = date('F j, Y', strtotime($appointment['client_date']));
-                        $formattedStartTime = date('h:i A', strtotime($appointment['start_time']));
-                        $formattedEndTime = date('h:i A', strtotime($appointment['end_time']));
-
-                        // Now, you have both appointment and client details, as well as service names, you can inject them into HTML
-                ?>
                 <div class="sub-text sub-text-c dets mb-0">Name: <?php echo $clientDetails['client_name']; ?></div>
                 <div class="sub-text sub-text-c dets mb-0 mt-0">Phone Number: <?php echo $clientDetails['client_contactno']; ?></div>
                 <div class="sub-text sub-text-c dets mb-0 mt-0">No. of Companion/s : <?php echo $clientDetails['no_of_companions']; ?></div>
@@ -108,22 +122,17 @@
                     ?>
                 </div>
                 <div class="sub-text sub-text-c dets mt-0">Date and Time of Appointment: <?php echo $formattedDate; ?>. <?php echo $formattedStartTime; ?> - <?php echo $formattedEndTime; ?></div>
-                <?php
-                    } else {
-                        // Handle case where no appointment is found
-                        echo "<div>No appointment found.</div>";
-                    }
-                ?>
             </div>
-            <div class="sub-text sub-text-c dets-1">Please save and present this QR code to your appointment day!</div>
+            <div class="sub-text sub-text-c dets-1 mb-0 fw-bold">Trouble Downloading the QR Code?</div>
+            <div class="sub-text sub-text-c dets-1 mt-0">If the QR code didn't download automatically, click the button below to download it manually.</div>
             <!-- Display the generated QR code here -->
             <div class="qrcode-container">
-                  <img src="generate-qr.php" alt="QR Code">
-              <div class="under-qrcode mt-4">
-                  <a id="downloadLink" href="generate-qr.php" download="appointment_qr_code.png">
-                      <img src="./assets/images/icon/export-qr.svg" alt="QR Download Icon"> 
-                  </a>
-              </div>
+                  <img src="generate-qr.php?appointment_id=<?php echo $appointmentId; ?>" alt="QR Code">
+            <div class="under-qrcode mt-4">
+                <a id="downloadLink" href="generate-qr.php?appointment_id=<?php echo $appointmentId; ?>" download="appointment_qr_code.png">
+                    <img src="./assets/images/icon/export-qr.svg" alt="QR Download Icon"> 
+                </a>
+            </div>
 
                 <div class="sub-text sub-text-c dets-2">Thank you for setting your appointment.</div>
             </div>
@@ -185,7 +194,12 @@
   </div>
 </div>
 
-<!-- <script>
+<script>
+     window.addEventListener('load', function () {
+            // Trigger the download automatically when the page loads
+            document.getElementById('downloadLink').click();
+        });
+  
     // Variable to track whether QR code has been downloaded
     var qrDownloaded = false;
 
@@ -207,15 +221,29 @@
                 myModal.show();
             } else {
                 // Otherwise, proceed with navigating to the previous page
-                window.location.href = event.target.href;
+                window.location.href = "index.php";
             }
         });
     }
-    
-</script> -->
+
+    window.addEventListener('beforeunload', function (e) {
+            var confirmationMessage = 'Are you sure you want to leave this page?';
+            
+            // Custom message may not always appear on some browsers like Chrome, but the default one will.
+            (e || window.event).returnValue = confirmationMessage; // Gecko + IE
+            return confirmationMessage; // Gecko + Webkit, Safari, Chrome etc.
+        });
+</script>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+<?php
+  } else {
+      // Handle case where no appointment is found
+      echo "<div>No appointment found.</div>";
+  }
+}
+?>

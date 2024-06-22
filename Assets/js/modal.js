@@ -9,11 +9,14 @@ function submitForm() {
         data: formData,
         processData: false,
         contentType: false,
+        dataType: 'json', // Ensure the response is parsed as JSON
         success: function(response) {
-            // Assuming insert.php returns the appointment_id
-            var appointment_id = response.appointment_id;
-            // Redirect to confirmation-qr.php with appointment_id parameter
-            window.location.href = "confirmation-qr.php?";
+            if (response.appointment_id) {
+                // Redirect to confirmation-qr.php with appointment_id parameter
+                window.location.href = "confirmation-qr.php?appointment_id=" + response.appointment_id;
+            } else {
+                console.error(response.error);
+            }
         },
         error: function(xhr, status, error) {
             // Handle errors here
@@ -21,6 +24,7 @@ function submitForm() {
         }
     });
 }
+
 
 
 function showConfirmationModalDelete() {

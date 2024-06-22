@@ -47,7 +47,7 @@
             }
         }
 
-        header("Location: Index.php");
+        header("Location: index.php");
     } else {
         echo "Form data not submitted!";
     }
