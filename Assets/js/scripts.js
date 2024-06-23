@@ -34,70 +34,94 @@ const isLeapYear = (year) => {
   let previousClickedDay = null;
   
   const generateCalendar = (month, year) => {
-      let calendar_days = document.querySelector('.calendar-days');
-      calendar_days.innerHTML = '';
-      let calendar_header_year = document.querySelector('#year');
-      let days_of_month = [
-          31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
-      ];
-  
-      let currentDate = new Date();
-  
-      month_picker.innerHTML = month_names[month];
-  
-      calendar_header_year.innerHTML = year;
-  
-      let first_day = new Date(year, month);
-  
-      const isSameDate = (date1, date2) => {
-          return (
-              date1.getFullYear() === date2.getFullYear() &&
-              date1.getMonth() === date2.getMonth() &&
-              date1.getDate() === date2.getDate()
-          );
-      };
-      
-      for (let i = 0; i < 42; i++) {
-          let day = document.createElement('div');
-          let currentDay = i - first_day.getDay() + 1;
-          let currentFullDate = new Date(year, month, currentDay);
-      
-          if (i >= first_day.getDay() && currentDay <= days_of_month[month]) {
-              day.innerHTML = currentDay;
-      
-              day.addEventListener('click', function() {
-                  if (previousClickedDay) {
-                      previousClickedDay.classList.remove('clicked-date');
-                  }
-                  saveDate(currentFullDate);
-                  day.classList.add('clicked-date');
-                  previousClickedDay = day;
-              });
-      
-              if (
-                  currentDay === currentDate.getDate() &&
-                  year === currentDate.getFullYear() &&
-                  month === currentDate.getMonth()
-              ) {
-                  // Do not add 'disabled' class for the current date
-              } else if (currentFullDate < currentDate && !isSameDate(currentFullDate, currentDate)) {
-                  day.classList.add('disabled');
-              }
-      
-              if (currentFullDate.getDay() === 3) {
-                  day.classList.add('disabled');
-                  if (i === first_day.getDay()) {
-                      day.classList.add('wednesday');
-                  }
-              }
-          } else {
-              day.classList.add('disabled');
-          }
-      
-          calendar_days.appendChild(day);
-      }
-      
-  };
+    let calendar_days = document.querySelector('.calendar-days');
+    calendar_days.innerHTML = '';
+    let calendar_header_year = document.querySelector('#year');
+    let days_of_month = [
+        31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+    ];
+
+    let currentDate = new Date();
+
+    month_picker.innerHTML = month_names[month];
+
+    calendar_header_year.innerHTML = year;
+
+    let first_day = new Date(year, month);
+
+    const isSameDate = (date1, date2) => {
+        return (
+            date1.getFullYear() === date2.getFullYear() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getDate() === date2.getDate()
+        );
+    };
+
+    const isDisabledDate = (date) => {
+        let month = date.getMonth();
+        let day = date.getDate();
+
+        // November 1st
+        if (month === 10 && day === 1) {
+            return true;
+        }
+
+        // December 24th and 25th
+        if ((month === 11 && day === 24) || (month === 11 && day === 25)) {
+            return true;
+        }
+
+        // December 31st to January 1st (New Year transition)
+        if ((month === 11 && day === 31) || (month === 0 && day === 1)) {
+            return true;
+        }
+
+        return false;
+    };
+    
+    for (let i = 0; i < 42; i++) {
+        let day = document.createElement('div');
+        let currentDay = i - first_day.getDay() + 1;
+        let currentFullDate = new Date(year, month, currentDay);
+    
+        if (i >= first_day.getDay() && currentDay <= days_of_month[month]) {
+            day.innerHTML = currentDay;
+    
+            day.addEventListener('click', function() {
+                if (previousClickedDay) {
+                    previousClickedDay.classList.remove('clicked-date');
+                }
+                saveDate(currentFullDate);
+                day.classList.add('clicked-date');
+                previousClickedDay = day;
+            });
+    
+            if (isDisabledDate(currentFullDate)) {
+                day.classList.add('disabled');
+            } else if (
+                currentDay === currentDate.getDate() &&
+                year === currentDate.getFullYear() &&
+                month === currentDate.getMonth()
+            ) {
+                // Disable the current date
+                day.classList.add('disabled');
+            } else if (currentFullDate < currentDate && !isSameDate(currentFullDate, currentDate)) {
+                day.classList.add('disabled');
+            }
+    
+            if (currentFullDate.getDay() === 3) {
+                day.classList.add('disabled');
+                if (i === first_day.getDay()) {
+                    day.classList.add('wednesday');
+                }
+            }
+        } else {
+            day.classList.add('disabled');
+        }
+    
+        calendar_days.appendChild(day);
+    }
+};
   
   //-----------------------------------------
   let clientDate = ""; // Initialize clientDate variable globally
@@ -110,7 +134,7 @@ const isLeapYear = (year) => {
       
       // Set the value of the hidden input field to the formatted date
       document.getElementById('client_date').value = formattedDate;
-      console.log("Clicked date:", formattedDate);
+    //   console.log("Clicked date:", formattedDate);
   
       // Update clientDate variable
       clientDate = formattedDate;
@@ -118,32 +142,43 @@ const isLeapYear = (year) => {
       // Reset the state of time buttons
       resetTimeButtonsState();
   
+      // Remove highlight from previously selected button
+      removeHighlightFromTimeButtons();
+  
       // Fetch appointments for the selected date
       fetchAppointmentsForDate(formattedDate);
   }
   
   function resetTimeButtonsState() {
-      console.log("Resetting time buttons state...");
+    //   console.log("Resetting time buttons state...");
       const timeButtons = document.querySelectorAll('.time-buttons');
       timeButtons.forEach(button => {
           button.disabled = true; // Disable all time buttons initially
       });
   }
   
+  function removeHighlightFromTimeButtons() {
+    //   console.log("Removing highlight from time buttons...");
+      const timeButtons = document.querySelectorAll('.time-buttons.highlight');
+      timeButtons.forEach(button => {
+          button.classList.remove('highlight');
+      });
+  }
+  
   function fetchAppointmentsForDate(date) {
-      console.log("Fetching appointments for date:", date);
+    //   console.log("Fetching appointments for date:", date);
   
       const xhr = new XMLHttpRequest();
       xhr.open('POST', 'fetch_appointments.php', true);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onreadystatechange = function() {
-          console.log("XHR Ready State:", xhr.readyState);
+        //   console.log("XHR Ready State:", xhr.readyState);
           if (xhr.readyState === 4) {
-              console.log("XHR Status:", xhr.status);
+            //   console.log("XHR Status:", xhr.status);
               if (xhr.status === 200) {
                   try {
                       const response = JSON.parse(xhr.responseText);
-                      console.log("Response:", response);
+                    //   console.log("Response:", response);
                       disableBookedTimeButtons(date, response);
                   } catch (error) {
                       console.error("Error parsing JSON response: ", error);
@@ -156,7 +191,7 @@ const isLeapYear = (year) => {
       };
       // Ensure the date is properly sent in the request body
       const params = 'date=' + encodeURIComponent(date);
-      console.log("Request params:", params);
+    //   console.log("Request params:", params);
       xhr.send(params);
   }
   
@@ -174,48 +209,47 @@ const isLeapYear = (year) => {
   }
   
   function disableBookedTimeButtons(clientDate, appointments) {
-    console.log("Disabling time buttons based on existing appointments...");
-
-    // Get current date and time
-    const currentDate = new Date();
-    const currentDateString = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
-    const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // Current time in minutes since midnight
-
-    // Get all time buttons
-    const timeButtons = document.querySelectorAll('.time-buttons');
-
-    // Enable or disable time buttons based on existing appointments and current time
-    timeButtons.forEach(button => {
-        const [buttonStart, buttonEnd] = button.value.split('-').map(time => time.trim());
-        const buttonStartTime = convertTo24HourClock(buttonStart) + ':00';
-        const buttonEndTime = convertTo24HourClock(buttonEnd) + ':00';
-
-        // Convert button times to comparable format
-        const [startHours, startMinutes] = buttonStart.split(':').map(part => parseInt(part, 10));
-        const buttonTimeInMinutes = startHours * 60 + startMinutes;
-
-        // Check if the button is for today and if the time has passed
-        const isToday = clientDate === currentDateString;
-        const isTimePassed = isToday && (currentTime > buttonTimeInMinutes);
-
-        // Check if any appointment exactly matches the time slot
-        const isBooked = appointments.some(appointment => {
-            const appointmentStartTime = appointment.start_time.split(' ')[0];
-            const appointmentEndTime = appointment.end_time.split(' ')[0];
-
-            return buttonStartTime === appointmentStartTime && buttonEndTime === appointmentEndTime;
-        });
-
-        if (isBooked || isTimePassed) {
-            button.disabled = true;
-            console.log(`Time button (${button.value}) disabled for Client Date: ${clientDate}.`);
-        } else {
-            button.disabled = false;
-            console.log(`Time button (${button.value}) enabled for Client Date: ${clientDate}.`);
-        }
-    });
-}
-
+    //   console.log("Disabling time buttons based on existing appointments...");
+  
+      // Get current date and time
+      const currentDate = new Date();
+      const currentDateString = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+      const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes(); // Current time in minutes since midnight
+  
+      // Get all time buttons
+      const timeButtons = document.querySelectorAll('.time-buttons');
+  
+      // Enable or disable time buttons based on existing appointments and current time
+      timeButtons.forEach(button => {
+          const [buttonStart, buttonEnd] = button.value.split('-').map(time => time.trim());
+          const buttonStartTime = convertTo24HourClock(buttonStart) + ':00';
+          const buttonEndTime = convertTo24HourClock(buttonEnd) + ':00';
+  
+          // Convert button times to comparable format
+          const [startHours, startMinutes] = buttonStart.split(':').map(part => parseInt(part, 10));
+          const buttonTimeInMinutes = startHours * 60 + startMinutes;
+  
+          // Check if the button is for today and if the time has passed
+          const isToday = clientDate === currentDateString;
+          const isTimePassed = isToday && (currentTime > buttonTimeInMinutes);
+  
+          // Check if any appointment exactly matches the time slot
+          const isBooked = appointments.some(appointment => {
+              const appointmentStartTime = appointment.start_time.split(' ')[0];
+              const appointmentEndTime = appointment.end_time.split(' ')[0];
+  
+              return buttonStartTime === appointmentStartTime && buttonEndTime === appointmentEndTime;
+          });
+  
+          if (isBooked || isTimePassed) {
+              button.disabled = true;
+            //   console.log(`Time button (${button.value}) disabled for Client Date: ${clientDate}.`);
+          } else {
+              button.disabled = false;
+            //   console.log(`Time button (${button.value}) enabled for Client Date: ${clientDate}.`);
+          }
+      });
+  }
   
   document.addEventListener('DOMContentLoaded', function() {
       resetTimeButtonsState(); // Reset time buttons state on page load
