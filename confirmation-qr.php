@@ -1,14 +1,14 @@
 <?php
 session_start();
 
+require_once('connect.php'); // Include your database connection script
+
 // Check if the appointment submission session variable is set
 if (!isset($_SESSION['appointment_submitted']) || $_SESSION['appointment_submitted'] !== true) {
     // If not set, redirect to the booking page
     header('Location: index.php');
     exit();
 }
-
-require_once('connect.php'); // Include your database connection script
 
 // Get appointment_id from the URL
 if (isset($_GET['appointment_id'])) {
@@ -64,44 +64,28 @@ if (isset($_GET['appointment_id'])) {
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Browlesque</title>
-    
-    <link rel="icon" href="./assets/images/icon/Browlesque-Icon.svg" type="image/png">
+    <link rel="icon" href="assets/images/icon/Browlesque-Icon.svg" type="image/png">
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="Assets/css/style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
+    <!-- Box Icon Link for Icons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-custom container-fluid">
-    <div class="container">
-        <a href="http://localhost/browlesque">
-            <img src="./assets/images/icon/Browlesque.svg" class="logo-browlesque-client" alt="Browlesque Logo">
-        </a>
-        <a class="navbar-toggler" href="index.php" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </a>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link back-button" href="index.php">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link back-button" href="book_appointment1.php">Book Appointment</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link back-button" href="index.php#about_us_section">About us</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+  
+  <?php include_once('topnavbar.php') ?>
 
-<div class="container-fluid">
-  <div class="container-flex add-white-bg">
-      <div class="container">
-      <h1 class="fw-bold mt-2" id="title">BOOKING CONFIRMATION</h1>
-        <div class="container-md container-md-custom">
+    <section class="appointment" id="appointment">
+        <h2 class="section_title"> Booking Confirmation</h2>
+      <div class="section_container" style="padding-bottom: 20px;">
+      <div class="appointment_container" style="border: 1px solid #ccc; border-radius: 20px; padding: 20px; background-color: #eeeeee;">
+      <div class="container-md">
             <div class="confirmation-details"> 
                 <div class="sub-text sub-text-c">Summary</div>
                 <div class="sub-text sub-text-c dets mb-0">Name: <?php echo $clientDetails['client_name']; ?></div>
@@ -137,62 +121,10 @@ if (isset($_GET['appointment_id'])) {
                 <div class="sub-text sub-text-c dets-2">Thank you for setting your appointment.</div>
             </div>
         </div>
-            <div class="back-home mt-5">
-                <a class="back-button" href="index.php">
-                  <img src="./assets/images/icon/back-home.svg" alt="Back Home Icon">
-                </a>
-            </div>
       </div>
-  </div>
-
-
-    <div class="container-flex add-black-bg">
-      <div class="container">
-        <div class="footer-container d-flex justify-content-between">
-          <div class="contact-us">
-            <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
-          </div>
-          <div class="contacts">
-            <ul class="nav d-flex align-items-center justify-content-end">
-              <li class="ms-3">
-                <span class="footer-text-white">
-                  <img src="./assets/images/icon/email.svg" alt="Email Icon"> browlesque@gmail.com
-                </span>
-              </li>
-              <li class="ms-3">
-                <a class="footer-text-white back-button" href="https://www.facebook.com/BrowlesqueCavite">
-                  <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon"> Browlesque Cavite
-                </a>
-              </li>
-              <li class="ms-3">
-                <span class="footer-text-white">
-                  <img src="./assets/images/icon/Phone.svg" alt="Phone Icon"> 09123456789
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
-    </div>
-</div>
-
-<!-- Add a modal dialog -->
-<div class="modal fade" id="reminderModal" tabindex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="reminderModalLabel">Reminder</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        Please download the QR code before leaving the page.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+    </section>
 
 <script>
      window.addEventListener('load', function () {
@@ -209,23 +141,6 @@ if (isset($_GET['appointment_id'])) {
         qrDownloaded = true;
     });
 
-    // Event listener for all elements with the class 'back-button'
-    var backButtonElements = document.getElementsByClassName('back-button');
-    for (var i = 0; i < backButtonElements.length; i++) {
-        backButtonElements[i].addEventListener('click', function(event) {
-            // Prevent default action
-            event.preventDefault();
-            // Show the modal dialog if QR code has not been downloaded
-            if (!qrDownloaded) {
-                var myModal = new bootstrap.Modal(document.getElementById('reminderModal'));
-                myModal.show();
-            } else {
-                // Otherwise, proceed with navigating to the previous page
-                window.location.href = "index.php";
-            }
-        });
-    }
-
     window.addEventListener('beforeunload', function (e) {
             var confirmationMessage = 'Are you sure you want to leave this page?';
             
@@ -235,6 +150,7 @@ if (isset($_GET['appointment_id'])) {
         });
 </script>
 
+<?php include_once('footer.php') ?>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

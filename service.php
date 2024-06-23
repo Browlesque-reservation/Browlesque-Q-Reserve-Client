@@ -29,85 +29,40 @@ if (isset($_GET['service_id'])) {
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Browlesque</title>
-    
-    <link rel="icon" href="./assets/images/icon/Browlesque-Icon.svg" type="image/png">
+    <link rel="icon" href="assets/images/icon/Browlesque-Icon.svg" type="image/png">
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="Assets/css/style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
+    <!-- Box Icon Link for Icons -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-custom container-fluid">
-    <div class="container">
-        <a href="http://localhost/browlesque">
-            <img src="./assets/images/icon/Browlesque.svg" class="logo-browlesque-client" alt="Browlesque Logo">
-        </a>
-        <a class="navbar-toggler" href="Index.php" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </a>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="Index.php">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="book_appointment1.php">Book Appointment</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php#about_us_section">About us</a>
-                </li>
-            </ul>
-        </div>
-        </div>
-    </div>
-</nav>
 
-<div class="container-fluid">
-  <div class="container-flex add-white-bg">
-      <div class="head-browlesque text-center"> BROWLESQUE</div>
-        <div class="serv-indiv-container container">
+<?php include_once('topnavbar.php') ?>
+
+    <section class="gallery" id="gallery">
+      <h2 class="section_title" style="padding-top: 0;padding-bottom:3%;"><?php echo $service_name; ?></h2>
+      <div class="section_container">
+        <div class="gallery_container">
+          <div class="gallery_items">
             <!-- Display service information -->
             <?php if (!empty($service_image)) : ?>
-                <img class="service-image" src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
+                <img src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
             <?php endif; ?>
-            <div class="serv-text">
-              <div class="sn-indiv"><?php echo $service_name; ?></div>
-              <div class="sd-indiv"><?php echo $service_description; ?></div>
-            </div>
-        </div>
-  </div>
-
-  <div class="container-flex add-black-bg">
-      <div class="container">
-        <div class="footer-container d-flex justify-content-between">
-          <div class="contact-us">
-            <span class="mb-3 mb-md-0 footer-text-white">Contact Us</span>
           </div>
-          <div class="contacts">
-            <ul class="nav d-flex align-items-center justify-content-end">
-              <li class="ms-3">
-                <span class="footer-text-white">
-                  <img src="./assets/images/icon/email.svg" alt="Email Icon"> browlesque@gmail.com
-                </span>
-              </li>
-              <li class="ms-3">
-                <a class="footer-text-white" href="https://www.facebook.com/BrowlesqueCavite">
-                  <img src="./assets/images/icon/Facebook.svg" alt="Facebook Icon"> Browlesque Cavite
-                </a>
-              </li>
-              <li class="ms-3">
-                <span class="footer-text-white">
-                  <img src="./assets/images/icon/Phone.svg" alt="Phone Icon"> 09123456789
-                </span>
-              </li>
-            </ul>
-          </div>
+          <p class="text-center"><?php echo $service_description; ?></p>
         </div>
       </div>
-    </div>
+    </section>
 
-</div>
+    <?php include_once('footer.php') ?>
+
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="./assets/js/text.js"></script>
