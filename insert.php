@@ -34,11 +34,8 @@
                 $result_details = mysqli_query($conn, $query_details);
     
                 if ($result_details) {
-                    // Return the appointment_id as JSON
-                    echo json_encode(['appointment_id' => $lastAppointmentID]);
-    
-                    // Set the session variable to indicate that the appointment has been submitted
                     $_SESSION['appointment_submitted'] = true;
+                    echo json_encode(['appointment_id' => $lastAppointmentID]);
                 } else {
                     // Handle error in client_details insertion
                     echo json_encode(['error' => 'Error inserting client details: ' . mysqli_error($conn)]);
