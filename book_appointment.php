@@ -334,6 +334,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
          }
       });
+      
       function validateForm(event) {
     event.preventDefault(); // Prevent form submission by default
 
@@ -379,13 +380,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Check if client contact number is only the pre-added value
     if (clientContact.value.trim() === '09') {
-        clientContactError.style.display = 'block';
-        clientContactError.scrollIntoView();
-        clientContact.focus();
-        return false;
-    } else {
-        clientContactError.style.display = 'none';
-    }
+    clientContactError.style.display = 'block';
+    clientContactError.scrollIntoView();
+    clientContact.focus();
+    return false;
+} else if (clientContact.value.trim().length < 11) {
+    clientContactError.style.display = 'block';
+    clientContactError.innerText = 'Contact number must be at least 11 characters long';
+    clientContactError.scrollIntoView();
+    clientContact.focus();
+    return false;
+} else {
+    clientContactError.style.display = 'none';
+}
 
     // Check if client companion value is empty
     if (clientCompanion.value.trim() === '') {
