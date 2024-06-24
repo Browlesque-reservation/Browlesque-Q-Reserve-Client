@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     return false;
 } else if (clientContact.value.trim().length < 11) {
     clientContactError.style.display = 'block';
-    clientContactError.innerText = 'Contact number must be at least 11 characters long';
+    clientContactError.innerText = 'Contact number must be at least 11 numbers long';
     clientContactError.scrollIntoView();
     clientContact.focus();
     return false;
