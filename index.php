@@ -27,7 +27,7 @@ if ($result2->num_rows > 0) {
     $consequents = $row2['consequents'];
     $antecedent_image = base64_encode($row2['antecedent_image']);
     $consequent_image = base64_encode($row2['consequent_image']);
-    $message = "Our " . htmlspecialchars($antecedents) . " and " . htmlspecialchars($consequents) . " Service is availed together by most of our clients! Book now and be one to experience this!";
+    $message = "Our <b>" . htmlspecialchars($antecedents) . "</b> and <b>" . htmlspecialchars($consequents) . "</b> Service is availed together by most of our clients! Book now and be one to experience this!";
 } else {
     $antecedent_image = base64_encode(file_get_contents('./Assets/images/pictures/microblading2.jpg')); // Default image
     $consequent_image = base64_encode(file_get_contents('./Assets/images/pictures/microblading2.jpg')); // Default image
@@ -100,21 +100,20 @@ $isEmpty = ($totalServices == 0 && $totalPromos == 0);
       <div class="section_container">
         <div class="service_container">
         <?php
-$services_found = false; // Flag to track if any services are found
-// Check if there are any services
-if ($totalServices > 0) {
-    // Loop through each service
-    while ($row = mysqli_fetch_assoc($result)) {
-        // Check if the service state is 'Activated'
-        if ($row['service_state'] == 'Activated') {
-            $service_id = $row['service_id'];
-            $service_name = $row['service_name'];
-            $service_description = $row['service_description'];
-            // Trim description to 50 characters and add ellipsis if it exceeds
-            $trimmed_description = strlen($service_description) > 60 ? substr($service_description, 0, 60) . '...' : $service_description;
-            $service_image = $row['service_image'];
-            $services_found = true; // Set flag to true if at least one service is found
-?>
+          $services_found = false; // Flag to track if any services are found
+          // Check if there are any services
+          if ($totalServices > 0) {
+              // Loop through each service
+              while ($row = mysqli_fetch_assoc($result)) {
+                  // Check if the service state is 'Activated'
+                  if ($row['service_state'] == 'Activated') {
+                      $service_id = $row['service_id'];
+                      $service_name = $row['service_name'];
+                      $service_description = $row['service_description'];
+                      // Trim description to 50 characters and add ellipsis if it exceeds
+                      $trimmed_description = strlen($service_description) > 60 ? substr($service_description, 0, 60) . '...' : $service_description;
+                      $service_image = $row['service_image'];
+                      $services_found = true; // Set flag to true if at least one service is found ?>
             <div class="services_items">
                 <img src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
                 <div class="services_text">
@@ -124,19 +123,18 @@ if ($totalServices > 0) {
                         onclick="redirectToServicePage(<?php echo $service_id; ?>)">READ MORE</button>
                 </div>
             </div>
-<?php
+    <?php }
         }
     }
-}
-// Check if no services were found after the loop
-if (!$services_found) {
-    // Display message based on whether there are active promos or not
-    if ($totalPromos > 0) {
-        echo "<div class='no-services-message text-center'>We are very sad to inform you that there are currently no services being offered, but we still have Promos! Book now!</div>";
-    } else {
-        echo "<div class='no-services-message text-center'>We are very sad to inform you that there are currently no services being offered. Please come again later.</div>";
-    }
-}
+  // Check if no services were found after the loop
+  if (!$services_found) {
+      // Display message based on whether there are active promos or not
+      if ($totalPromos > 0) {
+          echo "<div class='no-services-message text-center'>We are very sad to inform you that there are currently no services being offered, but we still have Promos! Book now!</div>";
+      } else {
+          echo "<div class='no-services-message text-center'>We are very sad to inform you that there are currently no services being offered. Please come again later.</div>";
+      }
+  }
 ?>
 
         </div>
