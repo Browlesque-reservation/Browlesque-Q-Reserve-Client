@@ -1164,6 +1164,7 @@ text-transform: uppercase;
     justify-content: flex-end; 
   }
   
+  
   .custom-next {
     background-color: var(--primary-color);
     color: #ffffff;
@@ -1180,12 +1181,26 @@ text-transform: uppercase;
   font-weight: 700;
   border: 1px solid black;
   }
+
+  .custom-next:disabled {
+    background-color: #e0e0e0; /* Light gray background */
+    color: #a0a0a0; /* Gray text color */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+  }
+
+  .custom-next:disabled:active {
+    background-color: #e0e0e0; /* Light gray background */
+    color: #a0a0a0; /* Gray text color */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+  }
   
   .custom-next:active {
   background-color: #111;
   color: #ffffff;
   border: 1px solid black;
   }
+
+
   
   @media (max-width: 1024px) {
     .fixed-buttons {
@@ -1361,11 +1376,7 @@ text-transform: uppercase;
       align-items: center;
   }
   
-  #year:hover {
-    cursor: pointer;
-    transform: scale(1.2);
-    transition: all 0.2 ease-in-out;
-  }
+ 
   
   .calendar-days div span {
     position: absolute;
@@ -2225,6 +2236,9 @@ text-transform: uppercase;
   
   .under-qrcode{
     transition: transform 0.3s ease-in-out;
+    padding: 8px;
+    border: solid 1px black;
+    background-color: white;
   }
   
   .under-qrcode:hover{
@@ -2361,7 +2375,7 @@ text-transform: uppercase;
 
 /* Footer Section */
 footer {
-    background: #1b1b1b;
+    background: var(--primary-color);
     color: var(--white-color) !important;
     padding: 60px 20px;
     text-decoration: none ;
