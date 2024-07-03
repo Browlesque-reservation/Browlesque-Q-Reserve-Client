@@ -434,9 +434,9 @@ function validateForm(event) {
         clientNameError.scrollIntoView();
         clientName.focus();
         return false;
-    } else if (clientName.value.trim().length < 5) {
+    } else if (clientName.value.trim().length < 3) {
         clientNameError.style.display = 'block';
-        clientNameError.innerText = 'Name must be at least 5 characters long.';
+        clientNameError.innerText = 'Name must be at least 3 characters long.';
         clientNameError.scrollIntoView();
         clientName.focus();
         return false;
