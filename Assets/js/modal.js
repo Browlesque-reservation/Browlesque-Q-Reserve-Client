@@ -67,6 +67,7 @@ function showConfirmationModalDeleteP() {
 function showConfirmationModal() {
     // Show the modal
     var confirmationModal = document.getElementById('confirmationModal');
+    document.body.classList.add('no-scroll');
     confirmationModal.style.display = 'block';
 }
 
@@ -75,6 +76,7 @@ function showConfirmationModal() {
 function hideConfirmationModal() {
     // Hide the modal
     var confirmationModal = document.getElementById('confirmationModal');
+    document.body.classList.remove('no-scroll');
     confirmationModal.style.display = 'none';
 }
 
@@ -82,6 +84,7 @@ function hideConfirmationModal() {
 function showSuccessModal() {
     // Show the modal
     var successModal = document.getElementById('successModal');
+    document.body.classList.add('no-scroll');
     successModal.style.display = 'block';
 }
 
@@ -89,5 +92,6 @@ function showSuccessModal() {
 function hideSuccessModal() {
     // Hide the modal
     var successModal = document.getElementById('successModal');
+    document.body.classList.remove('no-scroll');
     successModal.style.display = 'none';
 }

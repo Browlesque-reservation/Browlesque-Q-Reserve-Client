@@ -177,11 +177,11 @@
                         <span id="clientCompanionChoiceError" style="color: red; display: none;">Please select an answer.</span>
                         <div class="mb-3 d-flex justify-content-center">
                             <div class="btn-grid-container">
-                            <label class="label-checkbox mb-2 me-4 text-center"><span class="asterisk text-center">*</span>Do you have a companion?</label>
-                            <div class="parent-comp mb-3">
-                                <div class="div11"><button type="button" class="btn companion-btn me-2 fs-6 text-center" id="Yes" >Yes, I do</button></div>
-                                <div class="div12"><button type="button" class="btn companion-btn me-2 fs-6 text-center" id="No">No, I don't</button></div>
-                            </div>
+                                <label class="label-checkbox mb-2 me-4 text-center"><span class="asterisk text-center">*</span>Do you have a companion?</label>
+                                <div class="parent-comp mb-3">
+                                    <div class="div11"><button type="button" class="btn companion-btn widen-btn me-2 fs-6 text-center" id="Yes" >Yes, I do</button></div>
+                                    <div class="div12"><button type="button" class="btn companion-btn widen-btn me-2 fs-6 text-center" id="No">No, I don't</button></div>
+                                </div>
                             </div>
                         </div>
                         <span id="clientCompanionError" style="color: red; display: none;">Please select number of companion/s.</span>
