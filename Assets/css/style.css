@@ -1720,7 +1720,7 @@ text-transform: uppercase;
     grid-template-rows: repeat(1, minmax(0, 1fr));
     grid-gap: 10px;
     justify-content: center;
-  } 
+  }
   
   /* click effect on terms and conditions */
   .click-effect {
@@ -1768,35 +1768,35 @@ text-transform: uppercase;
   
   @media screen and (max-width: 768px) {
     .parent-comp {
-      display: flex;
-      flex-direction: row;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
     }
   
     .parent-comp-abt-us {
       grid-template-columns: repeat(1, minmax(0, 1fr));
       grid-template-rows: repeat(2, minmax(0, 1fr));
     }
-    .btn-grid-container{
-      flex-direction: column;
-    }
   
     #about_us_img {
       max-width: 20rem;
       max-height: 20rem;
     }
-
-    .btn.companion-btn.widen-btn{
-      overflow: auto;
-      white-space: normal;
-      padding: 1rem;
-    }
-  }
-  .no-scroll {
-    overflow: hidden;
   }
   
   /* Add this CSS for the confirmation overlay */
   #confirmationModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px) !important; /* Adjust the blur radius as needed */
+  }
+
+  #rejectModal {
     display: none;
     position: fixed;
     z-index: 1000;

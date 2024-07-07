@@ -14,7 +14,11 @@ function submitForm() {
             if (response.appointment_id) {
                 // Redirect to confirmation-qr.php with appointment_id parameter
                 window.location.href = "confirmation-qr.php?appointment_id=" + response.appointment_id;
-            } else {
+            } else if (response.error === 'booking_exists') {
+                    hideConfirmationModal();
+                    showRejectModal();
+                }
+            else {
                 console.error(response.error);
             }
         },
@@ -67,16 +71,21 @@ function showConfirmationModalDeleteP() {
 function showConfirmationModal() {
     // Show the modal
     var confirmationModal = document.getElementById('confirmationModal');
-    document.body.classList.add('no-scroll');
     confirmationModal.style.display = 'block';
 }
+
+function showRejectModal() {
+    // Show the modal
+    var rejectModal = document.getElementById('rejectModal');
+    rejectModal.style.display = 'block';
+}
+
 
 
 // Function to hide the confirmation modal
 function hideConfirmationModal() {
     // Hide the modal
     var confirmationModal = document.getElementById('confirmationModal');
-    document.body.classList.remove('no-scroll');
     confirmationModal.style.display = 'none';
 }
 
@@ -84,7 +93,6 @@ function hideConfirmationModal() {
 function showSuccessModal() {
     // Show the modal
     var successModal = document.getElementById('successModal');
-    document.body.classList.add('no-scroll');
     successModal.style.display = 'block';
 }
 
@@ -92,6 +100,5 @@ function showSuccessModal() {
 function hideSuccessModal() {
     // Hide the modal
     var successModal = document.getElementById('successModal');
-    document.body.classList.remove('no-scroll');
     successModal.style.display = 'none';
 }

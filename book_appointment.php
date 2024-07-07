@@ -8,7 +8,10 @@
         // Redirect to another page or show a message
         header("Location: index.php");
         exit();
-    }
+    } 
+
+
+    
    
    $query = "SELECT service_id, service_name, service_description, service_image FROM services WHERE service_state = 'Activated'";
    $result = mysqli_query($conn, $query);
@@ -49,6 +52,7 @@
 
     <!-- Book Appointment Section -->
     <section class="appointment" id="appointment">
+
         <h2 class="section_title"> Book Your Appointment</h2>
         <div class="section_container" style="padding-bottom: 20px;">
             <div class="appointment_container" style="border: 1px solid #ccc; border-radius: 20px; padding: 20px; background-color: #eeeeee;">
@@ -166,8 +170,9 @@
                     <div class="container-fluid">
                         <div class="mb-3" id="clientNameDiv">
                             <label for="client_name"><span class="asterisk">*</span>Name:</label>
-                            <input type="text" class="form-control" id="client_name" name="client_name">
+                            <input type="text" class="form-control" id="client_name" name="client_name" maxlength="70">
                             <span id="clientNameError" style="color: red; display: none;"></span>
+                            <span id="nameLimitMessage"style="color:gray; display: none;"><i>Note: Maximum input of 70 characters only.</i></span>
                         </div>
                         <div class="mb-4" id="clientNumberDiv">
                             <label for="client_contactno"><span class="asterisk">*</span>Enter your phone number:</label>
@@ -177,11 +182,11 @@
                         <span id="clientCompanionChoiceError" style="color: red; display: none;">Please select an answer.</span>
                         <div class="mb-3 d-flex justify-content-center">
                             <div class="btn-grid-container">
-                                <label class="label-checkbox mb-2 me-4 text-center"><span class="asterisk text-center">*</span>Do you have a companion?</label>
-                                <div class="parent-comp mb-3">
-                                    <div class="div11"><button type="button" class="btn companion-btn widen-btn me-2 fs-6 text-center" id="Yes" >Yes, I do</button></div>
-                                    <div class="div12"><button type="button" class="btn companion-btn widen-btn me-2 fs-6 text-center" id="No">No, I don't</button></div>
-                                </div>
+                            <label class="label-checkbox mb-2 me-4 text-center"><span class="asterisk text-center">*</span>Do you have a companion?</label>
+                            <div class="parent-comp mb-3">
+                                <div class="div11"><button type="button" class="btn companion-btn me-2 fs-6 text-center" id="Yes" >Yes, I do</button></div>
+                                <div class="div12"><button type="button" class="btn companion-btn me-2 fs-6 text-center" id="No">No, I don't</button></div>
+                            </div>
                             </div>
                         </div>
                         <span id="clientCompanionError" style="color: red; display: none;">Please select number of companion/s.</span>
@@ -202,6 +207,7 @@
                             <label for="client_notes">Notes (optional):</label>
                             <textarea class="form-control tall-input" id="client_notes" name="client_notes" maxlength="250"></textarea>
                         </div>
+                         <span id="noteLimitMessage"style="color:gray; display: none;"><i>Note: Maximum input of 250 characters only.</i></span>
                         <div class="container mt-5">
                         <span id="clientTermsError" style="display: none; color: red;">Please accept the terms and conditions to continue with the booking.</span>
                             <div class="mb-3 checkbox-container">
@@ -250,6 +256,16 @@
                   <div class="d-flex justify-content-end mt-5">
                      <button type="button" id="confirmButton" class="btn btn-primary-custom-tc me-2 fs-5 text-center" onclick="submitForm()">Confirm</button>
                      <button type="button" id="editButton" class="btn btn-secondary btn-secondary-custom me-2 fs-5 text-center" onclick="hideConfirmationModal()">Cancel</button>
+             </div>
+         </div>
+      </div>
+
+      <div id="rejectModal" data-bs-backdrop="static" class="modal">
+         <div class="modal-content-c custom-modal-content d-flex flex-column align-items-center">
+            <h2 class="text-center mt-3 mb-0">You have an existing appointment booked using this device.</h2>
+            <h6 class="text-center custom-subtitle mt-2 mb-2">Please try booking again after your scheduled appointment.</h6>
+                  <div class="d-flex justify-content-end mt-5">
+                     <button type="button" class="btn btn-secondary btn-secondary-custom me-2 fs-5 text-center" onclick="window.location.href = 'index.php';">Okay</button>
              </div>
          </div>
       </div>
@@ -343,6 +359,8 @@ document.getElementById("client_name").addEventListener("keypress", function(eve
     }
 });
 
+    
+
 document.getElementById("client_notes").addEventListener("keypress", function(event) {
     var charCode = event.charCode;
     var inputValue = event.target.value;
@@ -393,6 +411,28 @@ document.querySelectorAll('#num_companion .companion-btn').forEach(button => {
     });
 });
 
+var clientName = document.getElementById('client_name');
+var nameLimitMessage = document.getElementById('nameLimitMessage');
+
+    clientName.addEventListener('input', function () {
+      if (clientName.value.length >= 70) {
+        nameLimitMessage.style.display = 'block';
+      } else {
+        nameLimitMessage.style.display = 'none';
+      }
+    });
+
+    var clientNotes = document.getElementById('client_notes');
+    var noteLimitMessage = document.getElementById('noteLimitMessage');
+
+    clientNotes.addEventListener('input', function () {
+      if (clientNotes.value.length >= 250) {
+        noteLimitMessage.style.display = 'block';
+      } else {
+        noteLimitMessage.style.display = 'none';
+      }
+    });
+
 function validateForm(event) {
     event.preventDefault(); // Prevent form submission by default
 
@@ -427,6 +467,9 @@ function validateForm(event) {
         clientTimeError.style.display = 'none';
     }
 
+    const nameLimitMessage = document.getElementById('nameLimitMessage');
+    const noteLimitMessage = document.getElementById('noteLimitMessage');
+  
        // Check if client name is empty or less than 5 characters
        if (clientName.value.trim() === '') {
         clientNameError.style.display = 'block';
@@ -434,14 +477,20 @@ function validateForm(event) {
         clientNameError.scrollIntoView();
         clientName.focus();
         return false;
-    } else if (clientName.value.trim().length < 3) {
+    } else if (clientName.value.trim().length < 5) {
         clientNameError.style.display = 'block';
-        clientNameError.innerText = 'Name must be at least 3 characters long.';
+        clientNameError.innerText = 'Name must be at least 5 characters long.';
         clientNameError.scrollIntoView();
         clientName.focus();
         return false;
     } else {
         clientNameError.style.display = 'none';
+    }
+
+    if (clientName.value.trim().length >= 250) { 
+        nameLimitMessage.style.display = 'block';
+    }else {
+        nameLimitMessage.style.display = 'none';
     }
 
     // Check if client contact number is only the pre-added value
