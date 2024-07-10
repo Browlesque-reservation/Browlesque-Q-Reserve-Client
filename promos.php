@@ -1,16 +1,18 @@
 <?php
-   // define('INCLUDED', true);
-   require_once('connect.php');
+// define('INCLUDED', true);
+require_once('connect.php');
 
-   $query = "SELECT promo_id, promo_details, promo_image FROM promo WHERE promo_state = 'Activated'";
-   $result = mysqli_query($conn, $query);
+$admin_upload_path = '../Browlesque-Q-Reserve/'; // Update this path accordingly
 
-   if (!$result) {
+$query = "SELECT promo_id, promo_details, promo_price, promo_path, promo_type FROM promo WHERE promo_state = 'Activated'";
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
     echo "Error: " . mysqli_error($conn);
     exit();
 }
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -35,22 +37,24 @@
     <div class="promos-container container">
         <div class="head-promos text-center"> Just for you promos!</div>
         <?php
-          // Check if there are any services
+          // Check if there are any promos
           if (mysqli_num_rows($result) > 0) {
-             // Loop through each service
+             // Loop through each promo
             while ($row = mysqli_fetch_assoc($result)) {
               $promo_id = $row['promo_id'];
               $promo_details = $row['promo_details'];
-              $promo_image = $row['promo_image'];
+              $promo_price = $row['promo_price'];
+              $promo_path = $row['promo_path'];
         ?>
           <div class="promos-box">
-            <img class="promo-bg" src='image.php?promo_id=<?php echo $promo_id; ?>' alt='Promo Image'>
+            <img class="promo-bg" src="<?php echo $admin_upload_path . $promo_path; ?>" alt="Promo Image">
             <div class="promo-details" id="promo_details"><?php echo $promo_details; ?></div>
+            <div class="promo-price" id="promo_price"><?php echo 'Price: ₱', $promo_price; ?></div>
           </div>
             <?php }
               } else {
                   echo "No promos found.";
-                  }
+              }
             ?>
     </div>
   </div>
@@ -58,8 +62,6 @@
 </div>
 
 <?php include_once('footer.php') ?>
-
-
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="./assets/js/text.js"></script>

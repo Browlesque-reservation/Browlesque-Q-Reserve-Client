@@ -8,15 +8,12 @@
         // Redirect to another page or show a message
         header("Location: index.php");
         exit();
-    } 
-
-
-    
+    }
    
-   $query = "SELECT service_id, service_name, service_description, service_image FROM services WHERE service_state = 'Activated'";
+   $query = "SELECT service_id, service_name, service_price, service_description, service_path, service_type FROM services WHERE service_state = 'Activated'";
    $result = mysqli_query($conn, $query);
    
-   $query1 = "SELECT promo_id, promo_details, promo_image FROM promo WHERE promo_state = 'Activated'";
+   $query1 = "SELECT promo_id, promo_details, promo_price, promo_path, promo_type FROM promo WHERE promo_state = 'Activated'";
    $result1 = mysqli_query($conn, $query1);
    
    // Check if both queries returned empty results
@@ -67,10 +64,12 @@
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $service_id = $row['service_id'];
                                 $service_name = $row['service_name'];
+                                $service_price = $row['service_price'];
                                 $isDisabled = true;
                                 echo '<div class="form-check">';
                                 echo '<input class="form-check-input service-checkbox" type="checkbox" name="service_id[]" value="' . $service_id . '" id="Service_' . $service_id . '" data-disable="' . ($isDisabled ? 'true' : 'false') . '">';
                                 echo '<label class="form-check-label" for="Service_' . $service_id . '">' . $service_name . '</label>';
+                                echo '<p class="form-check-label">Price: ₱' . htmlspecialchars($service_price) . '</p>';
                                 echo '</div>';
                             }
                             echo '<input type="hidden" name="service_id[]" id="service_id">';
@@ -86,10 +85,12 @@
                             while ($row1 = mysqli_fetch_assoc($result1)) {
                                 $promo_id = $row1['promo_id'];
                                 $promo_details = $row1['promo_details'];
+                                $promo_price = $row1['promo_price'];
                                 $isDisabled = true;
                                 echo '<div class="form-check">';
                                 echo '<input class="form-check-input promo-checkbox" type="checkbox" name="promo_id[]" value="' . $promo_id . '" id="Promo_' . $promo_id . '" data-disable="' . ($isDisabled ? 'true' : 'false') . '">';
                                 echo '<label class="form-check-label" for="Promo_' . $promo_id . '">' . $promo_details . '</label>';
+                                echo '<p class="form-check-label">Price: ₱' . htmlspecialchars($promo_price) . '</p>';
                                 echo '</div>';
                             }
                             echo '<input type="hidden" name="promo_id[]" id="promo_id">';
@@ -170,39 +171,29 @@
                     <div class="container-fluid">
                         <div class="mb-3" id="clientNameDiv">
                             <label for="client_name"><span class="asterisk">*</span>Name:</label>
-                            <input type="text" class="form-control" id="client_name" name="client_name" maxlength="70">
+                            <input type="text" class="form-control" id="client_name" name="client_name" placeholder="e.g. Jane Doe" maxlength="70">
                             <span id="clientNameError" style="color: red; display: none;"></span>
                             <span id="nameLimitMessage"style="color:gray; display: none;"><i>Note: Maximum input of 70 characters only.</i></span>
                         </div>
-                        <div class="mb-4" id="clientNumberDiv">
-                            <label for="client_contactno"><span class="asterisk">*</span>Enter your phone number:</label>
+                        <div class="mb-3" id="clientNumberDiv">
+                            <label for="client_contactno"><span class="asterisk">*</span>Contact Number:</label>
                             <input type="tel" class="form-control" id="client_contactno" name="client_contactno" value="09" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 11);">
                             <span id="clientContactError" style="color: red; display: none;"></span>
+                            <div id="contact-length-indicator" class="mt-2" style="color:red;" ></div>
                         </div>
-                        <span id="clientCompanionChoiceError" style="color: red; display: none;">Please select an answer.</span>
-                        <div class="mb-3 d-flex justify-content-center">
-                            <div class="btn-grid-container">
-                            <label class="label-checkbox mb-2 me-4 text-center"><span class="asterisk text-center">*</span>Do you have a companion?</label>
-                            <div class="parent-comp mb-3">
-                                <div class="div11"><button type="button" class="btn companion-btn me-2 fs-6 text-center" id="Yes" >Yes, I do</button></div>
-                                <div class="div12"><button type="button" class="btn companion-btn me-2 fs-6 text-center" id="No">No, I don't</button></div>
-                            </div>
-                            </div>
+                        <div class="mb-3" id="clientEmailDiv">
+                            <label for="client_email"><span class="asterisk">*</span>Email Address:</label>
+                            <input type="email" class="form-control" id="client_email" name="client_email" aria-describedby="emailHelp" placeholder="e.g. customer@gmail.com" maxlength="254" required>
+                            <span id="clientEmailError" style="color: red; display: none;"></span>
+                            <span id="emailLimitMessage"style="color:gray; display: none;"><i>Note: Maximum input of 254 characters only.</i></span>
                         </div>
-                        <span id="clientCompanionError" style="color: red; display: none;">Please select number of companion/s.</span>
-                        <div id="num_companion"  style="display: none;">
-                            <div class="mb-3 d-flex justify-content-center">
-                            <div class="btn-grid-container">
-                                <label for="no_of_companions" class="label-checkbox mb-2 me-4 text-center"><span class="asterisk text-center">*</span>No. of Companions:</label>
-                                <div class="parent-comp mb-3">
-                                    <div class="div13"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="1">1</button></div>
-                                    <div class="div14"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="2">2</button></div>
-                                    <div class="div15"><button type="button" class="btn companion-btn me-2 fs-6 text-center" value="3">3</button></div>
-                                </div>
-                            </div>
-                            </div>
+                        <div class="mb-3" id="gcashUploadDiv">
+                            <label for="gcash_upload"><span class="asterisk">*</span>Upload GCASH Downpayment (₱1000) Proof Image:</label>
+                            <p class="me-5">GCASH Number: 09123456789</p>
+                            <input type="file" class="form-control" id="gcash_upload" name="gcash_upload" accept=".jpeg,.jpg,.png,.webp" required>
+                            <span id="imageUploadError" style="color: red; display: none;"></span>
+                            <span id="fileTypeMessage" style="color: gray; display: none;"><i>Note: Only JPEG, JPG, and PNG files are allowed.</i></span>
                         </div>
-                        <input type="hidden" name="no_of_companions" id="no_of_companions">
                         <div class="mb-3">
                             <label for="client_notes">Notes (optional):</label>
                             <textarea class="form-control tall-input" id="client_notes" name="client_notes" maxlength="250"></textarea>
@@ -211,8 +202,8 @@
                         <div class="container mt-5">
                         <span id="clientTermsError" style="display: none; color: red;">Please accept the terms and conditions to continue with the booking.</span>
                             <div class="mb-3 checkbox-container">
-                            <input type="checkbox" class="form-check-input" id="terms_conditions" name="terms_conditions" value="Agree">
-                            <label for="terms_conditions" class="label-checkbox-custom mb-2 click-effect"><span class="asterisk">*</span>Terms and Conditions</label>
+                            <input type="hidden" class="form-check-input" id="terms_conditions" name="terms_conditions" value="Agree">
+                            <label for="terms_conditions" class="label-checkbox-custom mb-2 click-effect">Terms and Conditions</label>
                             </div>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary click-effect" data-bs-toggle="modal" data-bs-target="#termsAndConditions" id="modalButton" style="display: none;">
@@ -241,7 +232,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary-custom-tc" id="acceptBtn">Accept</button>
-                <button type="button" class="btn btn-secondary btn-secondary-custom" id="declineBtn" data-bs-dismiss="modal">Decline</button>
             </div>
         </div>
     </div>
@@ -249,16 +239,29 @@
 
 
 
-      <div id="confirmationModal" data-bs-backdrop="static" class="modal">
-         <div class="modal-content-c custom-modal-content d-flex flex-column align-items-center">
-            <h1 class="text-center mt-3 mb-0">Are the information details correct?</h1>
-            <h6 class="text-center custom-subtitle mt-2 mb-2">By confirming, this will submit the appointment with the information you provided. Please review and ensure that these details are correct.</h6>
-                  <div class="d-flex justify-content-end mt-5">
-                     <button type="button" id="confirmButton" class="btn btn-primary-custom-tc me-2 fs-5 text-center" onclick="submitForm()">Confirm</button>
-                     <button type="button" id="editButton" class="btn btn-secondary btn-secondary-custom me-2 fs-5 text-center" onclick="hideConfirmationModal()">Cancel</button>
-             </div>
-         </div>
-      </div>
+<div id="confirmationModal" data-bs-backdrop="static" class="modal">
+    <div class="modal-content-c custom-modal-content d-flex flex-column align-items-center">
+        <h1 class="text-center mt-3 mb-0">Are the information details correct?</h1>
+        <p class="mt-3"><strong>Name:</strong> <span id="confirmClientName"></span></p>
+        <p><strong>Email:</strong> <span id="confirmClientEmail"></span></p>
+        <p><strong>Contact Number:</strong> <span id="confirmClientContact"></span></p>
+        <p><strong>Appointment Date:</strong> <span id="confirmClientDate"></span></p>
+        <p><strong>Appointment Time:</strong> <span id="confirmClientTime"></span> - <span id="confirmClientTimeend"></span></p>
+        <p id="confirmNotesField"><strong>Notes:</strong> <span id="confirmClientNotes"></span></p>
+        <p id="confirmServicesField"><strong>Chosen Services:</strong> <span id="confirmServices"></span></p>
+        <p id="confirmPromosField"><strong>Chosen Promos:</strong> <span id="confirmPromos"></span></p>
+        <p><strong>GCASH Downpayment Proof:</strong></p>
+        <div id="confirmImageContainer" style="display: none;">
+            <img id="confirmImage" style="max-width: 100px; height: auto; border-radius: 10px;">
+        </div>
+        <h6 class="text-center custom-subtitle mt-2 mb-2">By confirming, this will submit the appointment with the information you provided. Please review and ensure that these details are correct.</h6>
+        <div class="d-flex justify-content-end mt-3">
+            <button type="button" id="confirmButton" class="btn btn-primary-custom-tc me-2 fs-5 text-center" onclick="submitForm()">Confirm</button>
+            <button type="button" id="editButton" class="btn btn-secondary btn-secondary-custom me-2 fs-5 text-center" onclick="hideConfirmationModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
 
       <div id="rejectModal" data-bs-backdrop="static" class="modal">
          <div class="modal-content-c custom-modal-content d-flex flex-column align-items-center">
@@ -269,6 +272,19 @@
              </div>
          </div>
       </div>
+
+
+<div id="successBookedModal"  data-bs-backdrop="static" class="modal">
+    <div class="modal-content-c custom-modal-content d-flex flex-column align-items-center">
+        <!-- Replace the inline SVG with an <img> tag referencing your SVG file -->
+        <img src="./assets/images/icon/successful-icon.svg" alt="Success Icon" width="70" height="70">
+        <!-- End of replaced SVG -->
+        <h2 class="text-center custom-subtitle mt-2 mb-2">Your appointment request has been submitted. Please wait for an email confirmation.</h2>
+        <div class="d-flex justify mt-4">
+            <button type="button" class="btn btn-secondary btn-secondary-custom me-2 fs-5 text-center" onclick="hideSuccessModal(); window.location.href = 'index.php';">Back</button>
+        </div>
+    </div>
+</div>
 
       <?php include_once('footer.php') ?>
 
@@ -338,6 +354,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('gcash_upload');
+    const imageUploadError = document.getElementById('imageUploadError');
+    const fileTypeMessage = document.getElementById('fileTypeMessage');
+
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+
+        imageUploadError.style.display = 'none';
+        fileTypeMessage.style.display = 'none';
+
+        if (file) {
+            const fileType = file.type;
+            const fileSize = file.size / 1024 / 1024; // size in MB
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+            if (!validTypes.includes(fileType)) {
+                imageUploadError.style.display = 'block';
+                imageUploadError.textContent = 'Invalid file type. Only JPEG, JPG, and PNG files are allowed.';
+                this.value = ''; // Clear the input
+                return;
+            }
+
+            if (fileSize > 5) { // File size limit in MB
+                imageUploadError.style.display = 'block';
+                imageUploadError.textContent = 'File size exceeds the 5MB limit.';
+                this.value = ''; // Clear the input
+                return;
+            }
+        }
+    });
+});
+
 
 document.getElementById("client_name").addEventListener("keypress", function(event) {
     var charCode = event.charCode;
@@ -359,7 +408,22 @@ document.getElementById("client_name").addEventListener("keypress", function(eve
     }
 });
 
+document.getElementById("client_email").addEventListener("keypress", function(event) {
+    var charCode = event.charCode;
+    var inputValue = event.target.value;
     
+    // Prevent entering spaces
+    if (charCode === 32) {
+        event.preventDefault();
+        return;
+    }
+
+    // Prevent whitespace as the first character
+    if (inputValue.length === 0 && charCode === 32) {
+        event.preventDefault();
+        return;
+    }
+});   
 
 document.getElementById("client_notes").addEventListener("keypress", function(event) {
     var charCode = event.charCode;
@@ -387,29 +451,18 @@ document.getElementById('client_contactno').addEventListener('input', function(e
          }
 });
 
-document.getElementById('Yes').addEventListener('click', function() {
-    document.getElementById('num_companion').style.display = 'block';
-    document.getElementById('no_of_companions').value = ''; // Clear previous value
-    document.getElementById('clientCompanionChoiceError').style.display = 'none';
-    this.classList.add('active');
-    document.getElementById('No').classList.remove('active');
-});
+document.getElementById('client_contactno').addEventListener('input', checkContactNo);
 
-document.getElementById('No').addEventListener('click', function() {
-    document.getElementById('num_companion').style.display = 'none';
-    document.getElementById('no_of_companions').value = '0'; // Set value to 0 when no companion
-    document.getElementById('clientCompanionChoiceError').style.display = 'none';
-    document.getElementById('clientCompanionError').style.display = 'none';
-    this.classList.add('active');
-    document.getElementById('Yes').classList.remove('active');
-});
+function checkContactNo() {
+    var contactno = document.getElementById('client_contactno').value;
+    var indicator = document.getElementById('contact-length-indicator');
+    if (contactno.length === 11) {
+        indicator.textContent = "";
+    } else {
+        indicator.textContent = "Contact Number must be exactly 11 digits.";
+    }
+}
 
-document.querySelectorAll('#num_companion .companion-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        document.getElementById('no_of_companions').value = this.value;
-        document.getElementById('clientCompanionError').style.display = 'none';
-    });
-});
 
 var clientName = document.getElementById('client_name');
 var nameLimitMessage = document.getElementById('nameLimitMessage');
@@ -438,15 +491,15 @@ function validateForm(event) {
 
     var clientName = document.getElementById('client_name');
     var clientContact = document.getElementById('client_contactno');
+    var clientEmail = document.getElementById('client_email');
     var clientDate = document.getElementById('client_date');
     var clientTime = document.getElementById('start_time');
-    var clientCompanion = document.getElementById('no_of_companions');
+    var clientTimend = document.getElementById('end_time');
     var clientNameError = document.getElementById('clientNameError');
     var clientContactError = document.getElementById('clientContactError');
+    var clientEmailError = document.getElementById('clientEmailError');
     var clientDateError = document.getElementById('clientDateError');
     var clientTimeError = document.getElementById('clientTimeError');
-    var clientCompanionChoiceError = document.getElementById('clientCompanionChoiceError');
-    var clientCompanionError = document.getElementById('clientCompanionError');
     var termsCheckbox = document.getElementById('terms_conditions');
 
     // Check if client date is empty
@@ -468,6 +521,7 @@ function validateForm(event) {
     }
 
     const nameLimitMessage = document.getElementById('nameLimitMessage');
+    const emailLimitMessage = document.getElementById('emailLimitMessage');
     const noteLimitMessage = document.getElementById('noteLimitMessage');
   
        // Check if client name is empty or less than 5 characters
@@ -493,6 +547,35 @@ function validateForm(event) {
         nameLimitMessage.style.display = 'none';
     }
 
+// Check if client email is empty, valid format, or exceeds 250 characters
+if (clientEmail.value.trim() === '') {
+    clientEmailError.style.display = 'block';
+    clientEmailError.innerText = 'This field is required. Please input your email.';
+    clientEmailError.scrollIntoView();
+    clientEmail.focus();
+    return false;
+} else if (!validateEmail(clientEmail.value.trim())) {
+    clientEmailError.style.display = 'block';
+    clientEmailError.innerText = 'Please enter a valid email address.';
+    clientEmailError.scrollIntoView();
+    clientEmail.focus();
+    return false;
+} else {
+    clientEmailError.style.display = 'none';
+}
+
+if (clientEmail.value.trim().length >= 254) { 
+        emailLimitMessage.style.display = 'block';
+    }else {
+        emailLimitMessage.style.display = 'none';
+    }
+
+function validateEmail(email) {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+}
+
+
     // Check if client contact number is only the pre-added value
     if (clientContact.value.trim() === '09') {
         clientContactError.style.display = 'block';
@@ -510,33 +593,6 @@ function validateForm(event) {
         clientContactError.style.display = 'none';
     }
 
-    // Check if client companion choice is made
-    if (!document.getElementById('Yes').classList.contains('active') && !document.getElementById('No').classList.contains('active')) {
-        clientCompanionChoiceError.style.display = 'block';
-        clientCompanionChoiceError.scrollIntoView();
-        return false;
-    } else {
-        clientCompanionChoiceError.style.display = 'none';
-    }
-
-    // Check if client companion value is empty if Yes was selected
-    if (document.getElementById('Yes').classList.contains('active') && clientCompanion.value.trim() === '') {
-        clientCompanionError.style.display = 'block';
-        clientCompanionError.scrollIntoView();
-        return false;
-    } else {
-        clientCompanionError.style.display = 'none';
-    }
-
-    // Check if terms and conditions checkbox is checked
-    if (!termsCheckbox.checked) {
-        document.getElementById('clientTermsError').style.display = 'block';
-        document.getElementById('clientTermsError').scrollIntoView();
-        return false;
-    } else {
-        document.getElementById('clientTermsError').style.display = 'none';
-    }
-
     // If all inputs have values, show the modal
     showConfirmationModal();
 
@@ -552,6 +608,11 @@ document.getElementById('client_name').addEventListener('input', function() {
 document.getElementById('client_contactno').addEventListener('input', function() {
     var clientContactError = document.getElementById('clientContactError');
     clientContactError.style.display = 'none';
+});
+
+document.getElementById('client_email').addEventListener('input', function() {
+    var clientEmailError = document.getElementById('clientEmailError');
+    clientEmailError.style.display = 'none';
 });
 
 document.getElementById('client_date').addEventListener('input', function() {

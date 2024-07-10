@@ -369,14 +369,9 @@ document.getElementById('acceptBtn').addEventListener('click', function () {
     modalInstance.hide();
 });
 
-document.getElementById('declineBtn').addEventListener('click', function () {
-    var checkBox = document.getElementById('terms_conditions');
-    checkBox.checked = false;
-    var modal = document.getElementById('termsAndConditions');
-    var modalInstance = bootstrap.Modal.getInstance(modal);
-    modalInstance.hide();
-});
 
 document.querySelector('.label-checkbox-custom').addEventListener('click', function () {
     document.getElementById('modalButton').click();
 });
+
+//------------------------

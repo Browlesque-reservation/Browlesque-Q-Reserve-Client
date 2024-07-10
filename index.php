@@ -2,16 +2,16 @@
 // define('INCLUDED', true);
 require_once('connect.php');
 
-$query = "SELECT service_id, service_name, service_description, service_image, service_state FROM services WHERE service_state = 'Activated'";
+$admin_upload_path = '../Browlesque-Q-Reserve/'; // Update this path accordingly
+
+$query = "SELECT service_id, service_name, service_description, service_path, service_type, service_state FROM services WHERE service_state = 'Activated'";
 $result = mysqli_query($conn, $query);
 
-$query1 = "SELECT promo_id, promo_details, promo_image, promo_state FROM promo WHERE promo_state = 'Activated'";
+$query1 = "SELECT promo_id, promo_details, promo_path, promo_type, promo_state FROM promo WHERE promo_state = 'Activated'";
 $result1 = mysqli_query($conn, $query1);
 
-
-
 $query2 = "
-SELECT ar.antecedents, ar.consequents, s1.service_image AS antecedent_image, s2.service_image AS consequent_image
+SELECT ar.antecedents, ar.consequents, s1.service_path AS antecedent_image, s2.service_path AS consequent_image
 FROM association_rules ar
 LEFT JOIN services s1 ON ar.antecedents = s1.service_name
 LEFT JOIN services s2 ON ar.consequents = s2.service_name
@@ -25,16 +25,28 @@ if ($result2->num_rows > 0) {
     $row2 = $result2->fetch_assoc();
     $antecedents = $row2['antecedents'];
     $consequents = $row2['consequents'];
-    $antecedent_image = base64_encode($row2['antecedent_image']);
-    $consequent_image = base64_encode($row2['consequent_image']);
+    
+    $antecedent_image_path = $admin_upload_path . $row2['antecedent_image'];
+    $consequent_image_path = $admin_upload_path . $row2['consequent_image'];
+
+    if (file_exists($antecedent_image_path)) {
+        $antecedent_image = base64_encode(file_get_contents($antecedent_image_path));
+    } else {
+        $antecedent_image = base64_encode(file_get_contents('./Assets/images/pictures/microblading2.jpg')); // Default image
+    }
+
+    if (file_exists($consequent_image_path)) {
+        $consequent_image = base64_encode(file_get_contents($consequent_image_path));
+    } else {
+        $consequent_image = base64_encode(file_get_contents('./Assets/images/pictures/microblading2.jpg')); // Default image
+    }
+
     $message = "Our <b>" . htmlspecialchars($antecedents) . "</b> and <b>" . htmlspecialchars($consequents) . "</b> Service is availed together by most of our clients! Book now and be one to experience this!";
 } else {
     $antecedent_image = base64_encode(file_get_contents('./Assets/images/pictures/microblading2.jpg')); // Default image
     $consequent_image = base64_encode(file_get_contents('./Assets/images/pictures/microblading2.jpg')); // Default image
     $message = "We currently do not have any association rules to display. Please check back later for exciting services!";
 }
-
-
 
 if (!$result1) {
     echo "Error: " . mysqli_error($conn);
@@ -55,7 +67,7 @@ $isEmpty = ($totalServices == 0 && $totalPromos == 0);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Browlesque</title>
-    <link rel="icon" href="assets/images/icon/Browlesque-Icon.svg" type="image/png">
+    <link rel="icon" href="Assets/images/icon/Browlesque-Icon.svg" type="image/png">
     <!-- CSS Link -->
     <link rel="stylesheet" href="Assets/css/style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -68,7 +80,6 @@ $isEmpty = ($totalServices == 0 && $totalPromos == 0);
   <body>
 
   <?php include_once('topnavbar.php') ?>
-   
 
     <!-- Hero Section -->
     <section class="hero_section">
@@ -87,12 +98,11 @@ $isEmpty = ($totalServices == 0 && $totalPromos == 0);
           </div>
 
           <div class="image_section">
-            <img src="./assets/images/pictures/face.svg" alt="face" />
+            <img src="./Assets/images/pictures/face.svg" alt="face" />
           </div>
         </div>
       </div>
     </section>
-
 
     <!-- Services Section -->
     <section class="services">
@@ -112,10 +122,10 @@ $isEmpty = ($totalServices == 0 && $totalPromos == 0);
                       $service_description = $row['service_description'];
                       // Trim description to 50 characters and add ellipsis if it exceeds
                       $trimmed_description = strlen($service_description) > 60 ? substr($service_description, 0, 60) . '...' : $service_description;
-                      $service_image = $row['service_image'];
+                      $service_path = $admin_upload_path . $row['service_path'];
                       $services_found = true; // Set flag to true if at least one service is found ?>
             <div class="services_items">
-                <img src='image.php?service_id=<?php echo $service_id; ?>' alt='Service Image'>
+                <img src='<?php echo $service_path; ?>' alt='Service Image'>
                 <div class="services_text">
                     <b><?php echo $service_name; ?></b><br><br>
                     <p><?php echo $trimmed_description; ?></p>
@@ -184,11 +194,10 @@ $isEmpty = ($totalServices == 0 && $totalPromos == 0);
                                 $index = 0;
                                 mysqli_data_seek($result1, 0); // Reset pointer to the beginning
                                 while ($row = mysqli_fetch_assoc($result1)) :
-                                    ?>
+                                    $promo_image_path = $admin_upload_path . $row['promo_path'];
+                                    $promo_image = (file_exists($promo_image_path)) ? base64_encode(file_get_contents($promo_image_path)) : ''; ?>
                                     <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
-                                        <img class="d-block custom-image"
-                                            src="image.php?promo_id=<?php echo $row['promo_id']; ?>"
-                                            alt="<?php echo $row['promo_details']; ?>">
+                                        <img class="d-block custom-image" src="data:image/jpeg;base64,<?php echo $promo_image; ?>" alt="<?php echo $row['promo_details']; ?>">
                                     </div>
                                     <?php
                                     $index++;
@@ -251,8 +260,8 @@ $isEmpty = ($totalServices == 0 && $totalPromos == 0);
     <?php include_once('footer.php') ?>
 
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="./assets/js/text.js"></script>
-    <script src="./assets/js/carousel.js"></script>
+    <script src="./Assets/js/text.js"></script>
+    <script src="./Assets/js/carousel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
