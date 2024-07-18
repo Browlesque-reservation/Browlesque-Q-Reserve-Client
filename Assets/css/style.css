@@ -1709,8 +1709,9 @@ text-transform: uppercase;
   } */
   
   .btn.time-buttons.highlight {
-    background-color: #ffffff;
-    color: #313131;
+    background-color: #8d8d8d;
+    color: #ffffff;
+    border: 3px black solid;
   }
   
   .btn.companion-btn.highlight {

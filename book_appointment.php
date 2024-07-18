@@ -153,14 +153,14 @@
                         <span class="mb-2 mt-2"><span class="asterisk">*</span>Set appointment time:</span><br>
                         <div class="btn-grid-container">
                             <div class="parent mb-3">
-                                <div class="div1"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="9:00 AM-12:00 PM">9-12 PM</button></div>
-                                <div class="div2"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="10:00 AM-1:00 PM">10-1 PM</button></div>
-                                <div class="div3"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="11:00 AM-2:00 PM">11-2 PM</button></div>
-                                <div class="div4"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="12:00 PM-3:00 PM">12-3 PM</button></div>
-                                <div class="div5"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="1:00 PM-4:00 PM">1-4 PM</button></div>
-                                <div class="div6"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="2:00 PM-5:00 PM">2-5 PM</button></div>
-                                <div class="div7"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="3:00 PM-6:00 PM">3-6 PM</button></div>
-                                <div class="div8"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="4:00 PM-7:00 PM">4-7 PM</button></div>
+                                <div class="div1"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="9:00 AM-12:00 PM">9:00 AM - 12:00 PM</button></div>
+                                <div class="div2"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="10:00 AM-1:00 PM">10:00 AM -1:00 PM</button></div>
+                                <div class="div3"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="11:00 AM-2:00 PM">11:00 AM -2:00 PM</button></div>
+                                <div class="div4"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="12:00 PM-3:00 PM">12:00 PM -3:00 PM</button></div>
+                                <div class="div5"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="1:00 PM-4:00 PM">1:00 PM -4:00 PM</button></div>
+                                <div class="div6"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="2:00 PM-5:00 PM">2:00 PM -5:00 PM</button></div>
+                                <div class="div7"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="3:00 PM-6:00 PM">3:00 PM-6:00 PM</button></div>
+                                <div class="div8"><button type="button" class="btn time-buttons me-2 fs-6 text-center" value="4:00 PM-7:00 PM">4:00 PM-7:00 PM</button></div>
                             </div>
                         </div>
 
