@@ -398,6 +398,13 @@ document.getElementById("client_name").addEventListener("keypress", function(eve
         return;
     }
 
+    if (inputValue.slice(-1) === ' ' && charCode === 32) {
+        event.preventDefault();
+        return;
+    }
+
+    event.target.value = inputValue.replace(/\s{2,}/g, ' ');
+
     // Allow letters, hyphens, and period
     if (!(charCode >= 65 && charCode <= 90) && // Uppercase letters
         !(charCode >= 97 && charCode <= 122) && // Lowercase letters
@@ -417,7 +424,6 @@ document.getElementById("client_email").addEventListener("keypress", function(ev
         event.preventDefault();
         return;
     }
-
     // Prevent whitespace as the first character
     if (inputValue.length === 0 && charCode === 32) {
         event.preventDefault();
@@ -428,6 +434,13 @@ document.getElementById("client_email").addEventListener("keypress", function(ev
 document.getElementById("client_notes").addEventListener("keypress", function(event) {
     var charCode = event.charCode;
     var inputValue = event.target.value;
+
+    if (inputValue.slice(-1) === ' ' && charCode === 32) {
+        event.preventDefault();
+        return;
+    }
+
+    event.target.value = inputValue.replace(/\s{2,}/g, ' ');
     
     // Prevent whitespace as the first character
     if (inputValue.length === 0 && charCode === 32) {
